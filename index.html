@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World News Brief</title>
+    <title>World News Brief · 全球新闻简报</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -27,10 +27,13 @@
         .news-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
         .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.12); }
         .dark .news-card:hover { box-shadow: 0 12px 24px -8px rgba(0,0,0,0.4); }
-        .section-link { text-decoration: none; }
-        .section-link:hover span { text-decoration: underline; }
         .gradient-header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%); }
         .dark .gradient-header { background: linear-gradient(135deg, #0f0d2e 0%, #1e1b4b 50%, #312e81 100%); }
+        .lang-btn { cursor: pointer; transition: all 0.2s; }
+        .lang-btn.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+        .content-panel { display: none; }
+        .content-panel.active { display: block; }
+        .zh-text { font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
@@ -43,168 +46,101 @@
             <p class="text-lg text-indigo-200 font-medium">Daily Intelligence, Curated for You</p>
             <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
                 <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">
-                    Thursday, 14 May 2026 · Auckland, NZ
+                    <!-- DATE_HERE -->
                 </span>
                 <span class="bg-white/10 px-3 py-1 rounded-full">New Zealand</span>
+            </div>
+            <!-- Language Toggle -->
+            <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 text-sm">
+                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-4 py-1.5 rounded-full">🇬🇧 English</button>
+                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-4 py-1.5 rounded-full">🇨🇳 中文</button>
             </div>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 pb-24">
 
-        <!-- World Headlines -->
-        <section class="mb-14 fade-in">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
-                    <span class="mr-3 text-3xl">📰</span> World Headlines
-                </h2>
-                <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Top Stories</span>
-            </div>
-            <div id="headlines" class="grid gap-4 sm:grid-cols-2">
-                <!-- WORLD_NEWS_START -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-                    <a href="https://www.nytimes.com/live/2026/05/13/world/trump-xi-summit-china" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">China's Xi Warns Trump on Taiwan at Beijing Summit</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Xi Jinping told President Trump that Taiwan mishandled could lead to a clash with the US. The two leaders are also expected to discuss trade and the Iran war at the two-day summit.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-                    <a href="https://www.nytimes.com/2026/05/14/world/europe/ukraine-strike-kyiv-russia-putin.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Russia Pummels Kyiv After Putin Hints That War Could End Soon</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">At least one person was killed and dozens wounded in a drone and missile strike on Kyiv, the latest attacks since a three-day truce expired on Monday.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-                    <a href="https://www.nytimes.com/2026/05/14/world/asia/trump-china-beef.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">China Restores Beef Trade With U.S. as Goodwill Gesture for Trump Visit</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Beijing approved export licenses for hundreds of American slaughterhouses to resume beef shipments, ending a 15-month ban and offering a goodwill gesture during Trump's visit.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-                    <a href="https://www.nytimes.com/2026/05/13/world/europe/britain-leadership-turnover.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Britain Has Had 5 Leaders in a Decade. Is It About to Get Another?</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">The promise of Keir Starmer's Labour Party in 2024 was renewed stability, but that now appears to be under threat as political turmoil looms in the UK.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-                    <a href="https://www.nytimes.com/2026/05/13/world/middleeast/gulf-countries-arrest-shiite.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Gulf Countries Arrest Shiite 'Traitors' Amid War With Iran</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Dozens of Gulf citizens have been accused of belonging to Iran-linked terrorism cells as the war accelerates a shift toward deeper authoritarianism in the region.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-                    <a href="https://www.nytimes.com/2026/05/14/world/americas/argentina-hantavirus-cruise-ship.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Argentina Races To Find Origin of Hantavirus Outbreak</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">The scientific investigation into the origin of a cruise ship hantavirus infection has become entangled with international finger pointing.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.35s">
-                    <a href="https://www.nytimes.com/2026/05/13/world/africa/congo-colombia-deportee-return.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Judge Orders U.S. to Return Colombian Woman Deported to Congo</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">An unusual ruling found the Trump administration likely violated the law by deporting a 55-year-old Colombian woman to the Democratic Republic of Congo despite its refusal to take her.</p>
-                    </a>
-                </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.4s">
-                    <a href="https://www.nytimes.com/live/2026/05/13/world/trump-xi-summit-china#top-gaza-negotiator-urges-hamas-to-embrace-rebuilding-plan" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Top Gaza Negotiator Urges Hamas to Embrace Rebuilding Plan</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Nickolay Mladenov, overseeing the US-led truce in Gaza, has tried to convince Hamas to give up its arms, but the militant group has so far refused amid Israeli cease-fire violations.</p>
-                    </a>
-                </div>
-                <!-- WORLD_NEWS_END -->
-            </div>
-        </section>
+        <!-- ============ ENGLISH CONTENT ============ -->
+        <div id="panel-en" class="content-panel active">
 
-        <!-- Tech Frontiers -->
-        <section class="mb-14 fade-in" style="animation-delay: 0.15s">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
-                    <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
-                </h2>
-                <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Innovation</span>
-            </div>
-            <div id="tech" class="grid gap-4 sm:grid-cols-2">
-                <!-- TECH_NEWS_START -->
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-                    <a href="https://www.nytimes.com/2026/05/14/technology/ai-self-improving-recursive-superintelligence.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Notable Researchers Join $4 Billion Effort to Build Self-Improving A.I.</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Recursive Superintelligence, founded by former Google, Meta and OpenAI researchers, is part of a growing effort to automate the creation of artificial intelligence.</p>
-                    </a>
+            <!-- World Headlines -->
+            <section class="mb-14 fade-in">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">📰</span> World Headlines
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Top Stories</span>
                 </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-                    <a href="https://www.nytimes.com/2026/05/14/technology/anthropic-funding-valuation.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anthropic in Talks to Raise Funding at a $950 Billion Valuation</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">The AI company behind Claude is reportedly in talks for a massive funding round approaching a trillion-dollar valuation.</p>
-                    </a>
+                <div id="headlines" class="grid gap-4 sm:grid-cols-2">
+                    <!-- WORLD_NEWS_EN_START -->
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-400 dark:text-slate-600 text-lg italic">🌅 Today's briefing is being prepared...</p>
+                        <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">Check back at 8 AM NZ time for the latest</p>
+                    </div>
+                    <!-- WORLD_NEWS_EN_END -->
                 </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-                    <a href="https://www.nytimes.com/2026/05/13/technology/anduril-raises-5-billion.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anduril Raises $5 Billion in Funding and Is Valued at $61 Billion</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">The defense tech startup, which makes AI-backed weapons, doubled its valuation in a year with the massive new financing round.</p>
-                    </a>
+            </section>
+
+            <!-- Tech Frontiers -->
+            <section class="mb-14 fade-in" style="animation-delay: 0.15s">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Innovation</span>
                 </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-                    <a href="https://www.nytimes.com/2026/05/13/technology/ai-lobbying-washington-openai-anthropic.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Silicon Valley's A.I. Lobbying Blitz Reaches a Fever Pitch</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">OpenAI and Anthropic are opening offices in Washington, hiring lobbyists and spending more than ever to win over federal lawmakers on AI regulation.</p>
-                    </a>
+                <div id="tech" class="grid gap-4 sm:grid-cols-2">
+                    <!-- TECH_NEWS_EN_START -->
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-400 dark:text-slate-600 text-lg italic">🔬 Scanning the horizon for breakthroughs...</p>
+                        <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">Updated daily with the latest in tech</p>
+                    </div>
+                    <!-- TECH_NEWS_EN_END -->
                 </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-                    <a href="https://www.nytimes.com/2026/05/14/technology/nvidia-jensen-huang-trump-china.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Nvidia C.E.O. Jensen Huang Hitches Ride With Trump to China</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Jensen Huang boarded Air Force One in Alaska, joining a delegation of more than a dozen business leaders accompanying President Trump to the Beijing summit.</p>
-                    </a>
+            </section>
+
+        </div>
+
+        <!-- ============ CHINESE CONTENT ============ -->
+        <div id="panel-zh" class="content-panel zh-text">
+
+            <!-- 世界头条 -->
+            <section class="mb-14 fade-in">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">📰</span> 世界头条
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">今日要闻</span>
                 </div>
-                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-                    <a href="https://www.nytimes.com/2026/05/13/technology/polymarket-insider-trading.html" target="_blank" rel="noopener noreferrer" class="block">
-                        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Dozens of Polymarket Bets Show Signs of Insider Trading</h3>
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
-                        </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">A New York Times examination found that dozens of long-shot bets on Polymarket, from the war with Iran to the cryptocurrency market, have defied the odds, suggesting insider trading.</p>
-                    </a>
+                <div id="headlines-zh" class="grid gap-4 sm:grid-cols-2">
+                    <!-- WORLD_NEWS_ZH_START -->
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-400 dark:text-slate-600 text-lg italic">🌅 今天的简报正在准备中...</p>
+                        <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">每天上午 8 点（新西兰时间）更新</p>
+                    </div>
+                    <!-- WORLD_NEWS_ZH_END -->
                 </div>
-                <!-- TECH_NEWS_END -->
-            </div>
-        </section>
+            </section>
+
+            <!-- 科技前沿 -->
+            <section class="mb-14 fade-in" style="animation-delay: 0.15s">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">🚀</span> 科技前沿
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">创新动态</span>
+                </div>
+                <div id="tech-zh" class="grid gap-4 sm:grid-cols-2">
+                    <!-- TECH_NEWS_ZH_START -->
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-400 dark:text-slate-600 text-lg italic">🔬 正在扫描科技前沿...</p>
+                        <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">每日更新最新科技动态</p>
+                    </div>
+                    <!-- TECH_NEWS_ZH_END -->
+                </div>
+            </section>
+
+        </div>
 
     </main>
 
@@ -219,8 +155,15 @@
         </div>
     </footer>
 
-    <!-- Dark mode toggle (auto) -->
+    <!-- Language Switch Script -->
     <script>
+        function switchLang(lang) {
+            document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('panel-' + lang).classList.add('active');
+            document.getElementById('lang-' + lang).classList.add('active');
+        }
+        // Dark mode
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
