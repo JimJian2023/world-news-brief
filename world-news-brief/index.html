@@ -15,13 +15,13 @@
     <header class="bg-indigo-700 text-white py-8 px-4 shadow-lg mb-8">
         <div class="max-w-3xl mx-auto text-center">
             <h1 class="text-3xl font-bold tracking-tight">🌍 World News Brief</h1>
-            <p class="mt-2 text-indigo-100 opacity-90">Curated daily intelligence for Ning</p>
+            <p class="mt-2 text-indigo-100 opacity-90">Daily Intelligence for Ning</p>
         </div>
     </header>
 
     <main class="max-w-3xl mx-auto px-4 pb-20">
         <div id="date-display" class="text-center mb-8 font-medium text-slate-500 italic">
-            Loading latest update...
+            <!-- DATE_HERE -->
         </div>
 
         <!-- World Headlines Section -->
@@ -30,8 +30,9 @@
                 <span class="mr-2">📰</span> World Headlines
             </h2>
             <div id="headlines" class="space-y-4">
-                <!-- News items will be injected here -->
+                <!-- WORLD_NEWS_START -->
                 <p class="text-slate-400 italic text-center py-4">Your daily briefing is being prepared...</p>
+                <!-- WORLD_NEWS_END -->
             </div>
         </section>
 
@@ -41,8 +42,9 @@
                 <span class="mr-2">🚀</span> Tech Frontiers
             </h2>
             <div id="tech" class="space-y-4">
-                <!-- News items will be injected here -->
+                <!-- TECH_NEWS_START -->
                 <p class="text-slate-400 italic text-center py-4">Searching for the latest breakthroughs...</p>
+                <!-- TECH_NEWS_END -->
             </div>
         </section>
     </main>
@@ -50,11 +52,5 @@
     <footer class="fixed bottom-0 w-full bg-white border-t border-slate-200 py-3 px-4 text-center text-xs text-slate-400">
         Powered by Hermes Agent & GitHub Pages | Updated Daily
     </footer>
-
-    <script>
-        // This page will be updated via Git commits. 
-        // For the first load, we'll just show a welcome message.
-        document.getElementById('date-display').innerText = "Welcome! Your first automated brief is coming soon.";
-    </script>
 </body>
 </html>
