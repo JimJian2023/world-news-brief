@@ -8,11 +8,7 @@
     <script>
         tailwind.config = {
             darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
-                }
-            }
+            theme: { extend: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } }
         }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,11 +18,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', system-ui, sans-serif; }
-        .fade-in { animation: fadeIn 0.6s ease-out both; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .news-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.12); }
-        .dark .news-card:hover { box-shadow: 0 12px 24px -8px rgba(0,0,0,0.4); }
         .gradient-header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%); }
         .dark .gradient-header { background: linear-gradient(135deg, #0f0d2e 0%, #1e1b4b 50%, #312e81 100%); }
         .lang-btn { cursor: pointer; transition: all 0.2s; }
@@ -34,6 +25,31 @@
         .content-panel { display: none; }
         .content-panel.active { display: block; }
         .zh-text { font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif; }
+
+        /* Accordion styles */
+        .accordion-btn { cursor: pointer; transition: background-color 0.2s; }
+        .accordion-btn:hover { background-color: rgba(99,102,241,0.04); }
+        .dark .accordion-btn:hover { background-color: rgba(99,102,241,0.08); }
+        .accordion-btn.open { background-color: rgba(99,102,241,0.06); }
+        .dark .accordion-btn.open { background-color: rgba(99,102,241,0.1); }
+        .accordion-icon { transition: transform 0.3s ease; font-size: 1.25rem; line-height: 1; }
+        .accordion-btn.open .accordion-icon { transform: rotate(45deg); }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            padding: 0 1.25rem;
+        }
+        .accordion-body.open {
+            max-height: 360px;
+            opacity: 1;
+            padding: 0 1.25rem 1.25rem;
+        }
+        .fade-in { animation: fadeIn 0.5s ease-out both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .section-link { text-decoration: none; }
+        .section-link:hover span { text-decoration: underline; }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
@@ -41,9 +57,9 @@
     <!-- Header -->
     <header class="gradient-header text-white py-10 px-4 shadow-xl mb-10 relative overflow-hidden">
         <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);"></div>
-        <div class="max-w-4xl mx-auto text-center relative z-10">
+        <div class="max-w-3xl mx-auto text-center relative z-10">
             <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">🌍 World News Brief</h1>
-            <p class="text-lg text-indigo-200 font-medium">Daily Intelligence, Curated for You</p>
+            <p class="text-lg text-indigo-200 font-medium">Click a headline to read the full story</p>
             <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
                 <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">
                     Thursday, 14 May 2026 · Auckland, NZ
@@ -58,118 +74,273 @@
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 pb-24">
+    <main class="max-w-3xl mx-auto px-4 pb-24">
 
         <!-- ============ ENGLISH CONTENT ============ -->
         <div id="panel-en" class="content-panel active">
 
             <!-- World Headlines -->
-            <section class="mb-14 fade-in">
-                <div class="flex items-center justify-between mb-6">
+            <section class="mb-10 fade-in">
+                <div class="flex items-center justify-between mb-4">
                     <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
                         <span class="mr-3 text-3xl">📰</span> World Headlines
                     </h2>
-                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Top Stories</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Click to expand</span>
                 </div>
-                <div id="headlines" class="grid gap-4 sm:grid-cols-2">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- WORLD_NEWS_EN_START -->
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-    <a href="https://www.nytimes.com/live/2026/05/14/world/trump-xi-summit-china" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Trump and Xi Open High-Stakes Beijing Summit Focused on Iran, Trade, Taiwan</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">President Trump and President Xi Jinping began their landmark summit in Beijing, with the Iran war, trade imbalances, and Taiwan as the top items on an agenda shaping global order.</p>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Live Updates: Xi Warns Trump on Taiwan at Beijing Summit</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 10:13 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Xi Jinping, China's leader, told President Trump that if the Taiwan issue were handled poorly, it could lead to a clash with the United States. It was a reminder of longstanding tensions on a day laden with pageantry.</p>
+    <a href="https://www.nytimes.com/live/2026/05/13/world/trump-xi-summit-china" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-    <a href="https://www.bbc.com/news/world-europe-2026-05-14" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Russia Strikes Kyiv Hours After Putin Signals Willingness to Negotiate</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">A wave of Russian missiles struck Kyiv just hours after Vladimir Putin suggested he was open to peace talks, killing at least three and wounding dozens in the largest attack in weeks.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Inside the Secret Mission to Fly Taiwan's President to Africa</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:53 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">From satellite phone check-ins to a borrowed royal plane, new details show how Taiwan's leader's team outwitted China and pulled off an audacious journey to southern Africa.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/taiwan-eswatini-china-flight.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-    <a href="https://www.reuters.com/world/middle-east/iran-oil-exports-collapse-under-new-sanctions-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Iran Oil Exports Collapse Under Toughest Sanctions Yet, Global Prices Surge</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Reuters</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Iran's oil exports have fallen by more than 80% as a new round of US-led sanctions takes effect, sending global crude prices above $120 a barrel and raising recession fears worldwide.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Russia Pummels Kyiv After Putin Hints That War Could End Soon</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:51 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">At least four people were killed and dozens were wounded in a drone and missile strike, the latest in a series of attacks since a three-day truce expired on Monday.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/europe/ukraine-strike-kyiv-russia-putin.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-    <a href="https://apnews.com/article/gaza-reconstruction-hamas-ceasefire-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Gaza Ceasefire Holds as Negotiators Push $50B Reconstruction Plan</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Associated Press</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">A fragile ceasefire in Gaza entered its third week as international mediators pressed Hamas to endorse a $50 billion reconstruction plan, with the UAE pledging the largest share of funding.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Rescuers pull dead from rubble of Kyiv flats after massive Russian strikes</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:50 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Children are among the injured after Russia launched drones and missiles across Ukraine, officials say.</p>
+    <a href="https://www.bbc.com/news/articles/cq5p8yygq94o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-    <a href="https://www.bbc.com/news/world-asia-china-2026-05-14" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">China Calls for Restraint as Gulf States Ramp Up Anti-Shiite Crackdown</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Beijing urged Saudi Arabia, Bahrain and the UAE to exercise restraint after coordinated arrests of Shiite citizens accused of collaborating with Iran, warning the crackdown could destabilize the region further.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">In pictures: Trump hosted by Xi Jinping in Beijing on two-day summit</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:44 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">President Trump was welcomed by President Xi Jinping in Beijing for what will be a whirlwind tour.</p>
+    <a href="https://www.bbc.com/news/articles/cdxp0g4q3q2o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-    <a href="https://www.reuters.com/world/china/china-restores-us-beef-imports-ahead-trump-xi-summit-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">China Restores US Beef Imports Ahead of Trump-Xi Summit as Goodwill Gesture</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Reuters</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Beijing lifted its four-year ban on American beef imports just hours before the Trump-Xi summit, a move widely seen as a goodwill gesture aimed at de-escalating trade tensions between the world's two largest economies.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Duterte Ally Flees to Evade I.C.C. Arrest Warrant After Chaos at Philippine Senate</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:48 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Senator Ronald dela Rosa, who is wanted by the International Criminal Court in The Hague, had been holed up in the building when shots rang out.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/philippines-dela-rosa-senate-icc-warrant-duterte.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.35s">
-    <a href="https://www.zaobao.com.sg/singapore/politics/story20260514" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Lee Hsien Loong Urges Restraint in South China Sea Ahead of Trump-Xi Talks</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Lianhe Zaobao</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Singapore's Senior Minister Lee Hsien Loong urged both the US and China to avoid confrontation in the South China Sea, warning that escalating tensions would harm the entire ASEAN region.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Elon Musk Returns to Trump's Side in Beijing</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:12 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Mr. Musk is part of a delegation of business leaders to China, where his interests include Tesla's electric vehicle factory and solar panels.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/musk-china-trump-xi-beijing.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.4s">
-    <a href="https://news.cctv.com/2026/05/14/trump-xi-summit-china-bilateral-cooperation" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Xi Proposes Five-Year Cooperation Plan as Trump Summit Begins</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">President Xi Jinping unveiled a comprehensive five-year Sino-US cooperation plan covering trade, technology, and climate during the opening session of the Trump-Xi summit, calling for a "new model of great power relations."</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Cuba has run out of diesel and oil, energy minister says</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:06 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">The minister says the situation in Cuba is "extremely tense", as a US-led blockade of oil to the country causes widespread power cuts.</p>
+    <a href="https://www.bbc.com/news/articles/cd7pyrj0vx7o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.45s">
-    <a href="https://news.ifeng.com/c/2026-05-14/south-china-sea-tensions/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Taiwan Strait Situation Tense as Beijing Warns Against Separatist Moves</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Phoenix TV</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Beijing issued a stern warning against any "separatist adventures" in the Taiwan Strait, as US and Chinese naval vessels shadowed each other in waters near Taiwan while Trump and Xi met in Beijing.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">What to know as Trump visits Xi in China</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:05 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Trump has landed in Beijing for the first visit by a US leader since his own in 2017.</p>
+    <a href="https://www.bbc.com/news/articles/cyv2n7l1z14o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.5s">
-    <a href="https://www.cti.tv/news/2026/05/14/taiwan-defense-china-military" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Taiwan Defense Minister: 36 Chinese Aircraft Detected Near Island in 24 Hours</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CTi News</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Taiwan's defense ministry reported 36 Chinese military aircraft and 8 naval vessels operating around the island in the past 24 hours, the largest show of force during the Trump-Xi summit week.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Argentina Races To Find Origin of Hantavirus Outbreak</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:04 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">The scientific investigation into the origin of a cruise ship hantavirus infection has become entangled with international finger pointing.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/americas/hantavirus-cruise-ship-argentina.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.55s">
-    <a href="https://www.nytimes.com/2026/05/14/world/asia/musk-china-trump-xi-beijing.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Elon Musk and Nvidia CEO Join Trump Delegation in Beijing</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Elon Musk and Nvidia CEO Jensen Huang accompanied President Trump to key Beijing meetings, as technology and chip export restrictions took center stage in the US-China bilateral talks.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">China Restores Beef Trade With U.S. as Goodwill Gesture for Trump Visit</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 08:14 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Beijing approved export licenses for hundreds of American slaughterhouses to resume beef shipments, ending a 15-month ban.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/trump-china-beef.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Cecilia Flores Became the Voice of Mexican Mothers</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:00 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">One of the most prominent activists for Mexico's disappeared recently found the remains of one missing son. Now she has turned her attention to finding the other.</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/americas/cecilia-flores-mexico-disappeared.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Watch: What happened on day one of Trump's China visit?</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 07:13 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">China welcomed US President Donald Trump with cheering children and a troop parade on Thursday, before a nearly two-hour long meeting with Xi Jinping.</p>
+    <a href="https://www.bbc.com/news/videos/c707xn4ew3po" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Nigerian film star Alexx Ekubo dies from cancer aged 40</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 06:25 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">The actor was recognised for his contributions to entertainment as well as his humanitarian efforts.</p>
+    <a href="https://www.bbc.com/news/articles/c74d1j2ew0yo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">'They shot my neighbour in the head' - the lakeside city traumatised by war</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 05:09 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Rebel fighters and Rwandan troops are accused of committing atrocities after capturing the DR Congo city of Uvira in December.</p>
+    <a href="https://www.bbc.com/news/articles/cy42dgj0x32o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Judge Orders U.S. to Return Colombian Woman Deported to Congo</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 02:00 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">The unusual ruling came after the judge found that the Trump administration had most likely violated the law by deporting the 55-year-old woman to the African country despite its refusal to take her.</p>
+    <a href="https://www.nytimes.com/2026/05/13/world/africa/congo-colombia-deportee-return.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
+    </a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Court overturns Alex Murdaugh's murder convictions and orders new trial</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 00:38 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">The court has ordered a new trial over the June 2021 killings of Paul and Maggie Murdaugh.</p>
+    <a href="https://www.bbc.com/news/articles/cedpvnq7wn1o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
                     <!-- WORLD_NEWS_EN_END -->
@@ -177,85 +348,87 @@
             </section>
 
             <!-- Tech Frontiers -->
-            <section class="mb-14 fade-in" style="animation-delay: 0.15s">
-                <div class="flex items-center justify-between mb-6">
+            <section class="mb-10 fade-in" style="animation-delay: 0.15s">
+                <div class="flex items-center justify-between mb-4">
                     <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
                         <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
                     </h2>
-                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Innovation</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Click to expand</span>
                 </div>
-                <div id="tech" class="grid gap-4 sm:grid-cols-2">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- TECH_NEWS_EN_START -->
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-    <a href="https://www.nytimes.com/2026/05/14/technology/anduril-raises-5-billion.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anduril Raises $5 Billion, Valued at $61 Billion</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Defense tech startup Anduril secured a massive $5 billion funding round, more than doubling its valuation to $61 billion as investors bet on AI-powered military systems amid global conflict.</p>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Why 'Smart' Products Have Started to Look Like the Dumb Choice</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:04 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">How Wi-Fi-connecting, app-based tech led to a backlash in the name of simplicity.</p>
+    <a href="https://www.nytimes.com/2026/05/14/magazine/dumb-phones-tvs-retronym-smart-tech.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-    <a href="https://www.reuters.com/technology/anthropic-funding-950-billion-valuation-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anthropic Nears $1 Trillion Valuation in New Funding Round</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Reuters</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">AI company Anthropic is negotiating a new funding round that could value it at nearly $1 trillion, reinforcing the staggering pace of investment in advanced artificial intelligence and rivaling OpenAI's valuation.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Ishmael Reed Is Writing a Play About Elon Musk</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:02 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Ishmael Reed, provocateur and playwright, has a few words for the billionaires of Silicon Valley.</p>
+    <a href="https://www.nytimes.com/2026/05/14/technology/ishmael-reed-elon-musk-play.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-    <a href="https://www.bbc.com/news/technology-china-ai-chip-export-restrictions-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Chip Export Controls Dominate Trump-Xi Tech Agenda</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Nvidia CEO Jensen Huang and other tech leaders joined the Trump delegation in Beijing as semiconductor export restrictions and AI competition became the central focus of US-China technology discussions.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Crypto Industry Pushes a Bill to Tilt Regulation in Its Favor</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 09:00 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">After a series of political victories under President Trump, firms are lobbying Congress for a sweeping regulatory framework they helped shape.</p>
+    <a href="https://www.nytimes.com/2026/05/14/technology/cryptocurrency-clarity-act-senate.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-    <a href="https://apnews.com/article/ai-lobbying-washington-openai-anthropic-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Silicon Valley AI Giants Spend Record $100M on Washington Lobbying</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Associated Press</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">OpenAI, Anthropic, Google DeepMind and other AI companies have collectively spent over $100 million on lobbying in the past quarter, shaping a regulatory landscape that could define the industry for decades.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">HMRC to use AI from British tech firm to spot fraud and tax return errors</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 05:10 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Quantexa, a financial data platform, won the £175m contract to spot fraud and tax return errors.</p>
+    <a href="https://www.bbc.com/news/articles/c7v9ld262n4o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-    <a href="https://www.nytimes.com/2026/05/14/technology/recursive-superintelligence-funding-ai.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Top Researchers Join $4B Project to Build Self-Improving AI</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Leading AI researchers from around the world are converging on a $4 billion initiative to develop recursive self-improving AI systems, a major step toward artificial general intelligence that has sparked both excitement and concern.</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-    <a href="https://news.cctv.com/2026/05/14/china-ai-breakthrough-baidu-ernie" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">China Unveils Next-Gen AI Model Rivaling GPT-5 in Benchmark Tests</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">China's top AI labs jointly unveiled a new large language model that matches GPT-5 on key benchmarks, showcasing Beijing's technological ambitions as US-China tech competition intensifies.</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.35s">
-    <a href="https://www.reuters.com/technology/iran-war-fuel-prices-global-ev-sales-surge-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Global EV Sales Surge as Iran War Pushes Oil Above $120</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Reuters</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Electric vehicle sales jumped 40% year-on-year globally as oil prices surged past $120 per barrel due to the Iran conflict, with China and Europe leading the shift while US adoption lagged.</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.4s">
-    <a href="https://www.zaobao.com.sg/tech/huawei-5g-europe-expansion-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Huawei Signs $3B 5G Deal With Major European Carrier</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Lianhe Zaobao</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">Huawei secured a $3 billion contract to supply 5G equipment to a major European telecom operator, marking the Chinese company's biggest European expansion since US-led restrictions were imposed.</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">A Start-Up Aiming to Make Geothermal Energy Mainstream Goes Public</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026, 00:42 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Fervo Energy, which uses drilling techniques from the oil and gas industry to produce power from the earth's heat, raised $1.9 billion in an initial public offering.</p>
+    <a href="https://www.nytimes.com/2026/05/13/business/energy-environment/fervo-geothermal-energy-ipo.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        Read full article →
     </a>
 </div>
                     <!-- TECH_NEWS_EN_END -->
@@ -268,121 +441,162 @@
         <div id="panel-zh" class="content-panel zh-text">
 
             <!-- 世界头条 -->
-            <section class="mb-14 fade-in">
-                <div class="flex items-center justify-between mb-6">
+            <section class="mb-10 fade-in">
+                <div class="flex items-center justify-between mb-4">
                     <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
                         <span class="mr-3 text-3xl">📰</span> 世界头条
                     </h2>
-                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">今日要闻</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">点击展开</span>
                 </div>
-                <div id="headlines-zh" class="grid gap-4 sm:grid-cols-2">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- WORLD_NEWS_ZH_START -->
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-    <a href="https://www.nytimes.com/live/2026/05/14/world/trump-xi-summit-china" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">特朗普与习近平在北京举行历史性峰会，聚焦伊朗、贸易与台湾</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">纽约时报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">美国总统特朗普与中国国家主席习近平在北京举行备受瞩目的峰会，伊朗战争、贸易不平衡和台湾问题成为重塑全球秩序的首要议程。</p>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">特朗普抵达北京与习近平举行会谈 贸易、伊朗和台湾问题成议程焦点</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:05 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">美国总统特朗普抵达北京与习近平举行首次会谈。习近平警告特朗普，台湾问题若处理不当可能导致中美冲突。北京以盛大仪式欢迎特朗普到访。</p>
+    <a href="https://www.bbc.com/news/articles/cyv2n7l1z14o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-    <a href="https://www.bbc.com/zhongwen/simp/world-2026-05-14" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">普京释放谈判信号数小时后，俄军大规模导弹袭击基辅</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">就在普京表示愿意进行和平谈判的数小时后，俄罗斯向基辅发动大规模导弹袭击，造成至少三人死亡、数十人受伤，为数周以来最大规模的攻击。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">俄罗斯大规模空袭基辅 造成至少4人死亡</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC/NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:50 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">俄罗斯在三天休战到期后发动无人机和导弹袭击，至少4人死亡、数十人受伤，救援人员从基辅公寓楼废墟中抬出遇难者。</p>
+    <a href="https://www.bbc.com/news/articles/cq5p8yygq94o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-    <a href="https://www.reuters.com/world/middle-east/iran-oil-exports-collapse-under-new-sanctions-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">伊朗石油出口因史上最严厉制裁暴跌，全球油价飙升</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">路透社</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">新一轮美国主导的制裁导致伊朗石油出口骤降80%以上，全球原油价格突破每桶120美元，引发全球性经济衰退担忧。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">台湾总统赖清德秘密飞往非洲 细节曝光</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:53 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">从卫星电话签到借用王室飞机，新细节揭示了台湾领导人团队如何智胜中国，完成了一次前往南部非洲的大胆旅程。</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/taiwan-eswatini-china-flight.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-    <a href="https://apnews.com/article/gaza-reconstruction-hamas-ceasefire-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">加沙停火持续，调解方推动500亿美元重建计划</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">美联社</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">加沙脆弱的停火已进入第三周，国际调解方敦促哈马斯接受一项500亿美元的重建计划，阿联酋承诺出资最大份额。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">杜特尔特盟友在菲律宾参议院枪声后逃离 躲避ICC逮捕令</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC/NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:48 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">被国际刑事法院通缉的参议员罗纳德·德拉·罗萨此前躲在参议院大楼内，现场响起枪声后他已逃离。联邦探员正在搜捕他。</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/philippines-dela-rosa-senate-icc-warrant-duterte.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-    <a href="https://www.bbc.com/zhongwen/simp/world-2026-05-14-china-gulf" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">中国呼吁海湾国家克制，避免教派冲突升级</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">北京敦促沙特阿拉伯、巴林和阿联酋保持克制，此前三国协调逮捕了被指控与伊朗勾结的什叶派公民，中方警告此举可能进一步破坏地区稳定。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">古巴柴油和石油耗尽 能源部长表示局势极其紧张</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:06 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">能源部长表示古巴局势"极其紧张"，美国主导的石油封锁导致该国大范围停电。</p>
+    <a href="https://www.bbc.com/news/articles/cd7pyrj0vx7o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-    <a href="https://www.zaobao.com.sg/news/china/story20260514" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">李显龙呼吁中美在南中国海保持克制</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">新加坡国务资政李显龙呼吁中美两国避免在南中国海发生对抗，警告称紧张局势升级将损害整个东盟地区的利益。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">阿根廷紧急寻找汉坦病毒爆发源头</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:04 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">对邮轮汉坦病毒感染源头的科学调查已卷入国际相互指责之中。</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/americas/hantavirus-cruise-ship-argentina.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.35s">
-    <a href="https://news.cctv.com/2026/05/14/xi-jinping-trump-summit-cooperation-plan" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">习近平在特朗普峰会开幕式上提出五年合作计划</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">央视</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">中国国家主席习近平在特朗普峰会开幕式上提出覆盖贸易、科技和气候的全面五年中美合作计划，呼吁构建"新型大国关系"。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">中国恢复进口美国牛肉 作为特朗普访问的善意姿态</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 08:14 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">北京批准了数百家美国屠宰场的出口许可证，恢复牛肉运输，结束了为期15个月的禁令。</p>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/trump-china-beef.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.4s">
-    <a href="https://news.ifeng.com/c/2026-05-14/taiwan-strait-tensions" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">台海局势紧张，北京警告"台独"分裂行径</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">凤凰卫视</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">北京就台海局势发出严厉警告，反对任何"分裂冒险行径"。特朗普与习近平在北京会晤期间，中美海军舰艇在台湾附近水域相互监视。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">法院推翻Alex Murdaugh谋杀定罪 下令重审</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 00:38 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">法院下令就2021年6月Paul和Maggie Murdaugh被杀案进行重审。</p>
+    <a href="https://www.bbc.com/news/articles/cedpvnq7wn1o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.45s">
-    <a href="https://www.cti.tv/news/2026/05/14/taiwan-china-aircraft-detected" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">台湾国防部：24小时内侦获36架次中国军机</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">中天新闻</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">台湾国防部通报，过去24小时内共侦获36架次中国军机和8艘次军舰在台湾周边活动，为特朗普-习近平峰会周期间最大规模的兵力展示。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">法官下令美国将在哥伦比亚妇女遣返刚果一案中归还当事人</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 02:00 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">法官裁定特朗普政府将这名55岁妇女遣返非洲国家的行为很可能违法，特别是在该国拒绝接收的情况下。</p>
+    <a href="https://www.nytimes.com/2026/05/13/world/africa/congo-colombia-deportee-return.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.5s">
-    <a href="https://news.ifeng.com/c/2026-05-14/china-restores-us-beef-imports" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">中国恢复进口美国牛肉，峰会前释放善意信号</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">凤凰卫视</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">就在特朗普与习近平峰会开始前数小时，北京解除了对美国牛肉长达四年的进口禁令。此举被广泛视为缓和全球两大经济体贸易紧张关系的善意姿态。</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.55s">
-    <a href="https://www.nytimes.com/2026/05/14/world/asia/musk-china-trump-xi-beijing.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">马斯克与英伟达CEO黄仁勋随特朗普代表团访问北京</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">纽约时报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">埃隆·马斯克与英伟达CEO黄仁勋随特朗普总统参加北京关键会议，科技与芯片出口限制成为中美双边会谈的核心议题。</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.6s">
-    <a href="https://www.zaobao.com.sg/news/china/story20260514-2" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">中美峰会前夕，中国宣布放宽外资准入限制</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">中国政府宣布将进一步放宽金融、制造和医疗领域的外资准入限制，明显是为迎接特朗普峰会释放积极信号，展示对外开放姿态。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">尼日利亚电影明星Alexx Ekubo因癌症去世 享年40岁</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 06:25 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">这位演员因其对娱乐业的贡献以及人道主义努力而受到认可。</p>
+    <a href="https://www.bbc.com/news/articles/c74d1j2ew0yo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
                     <!-- WORLD_NEWS_ZH_END -->
@@ -390,85 +604,87 @@
             </section>
 
             <!-- 科技前沿 -->
-            <section class="mb-14 fade-in" style="animation-delay: 0.15s">
-                <div class="flex items-center justify-between mb-6">
+            <section class="mb-10 fade-in" style="animation-delay: 0.15s">
+                <div class="flex items-center justify-between mb-4">
                     <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
                         <span class="mr-3 text-3xl">🚀</span> 科技前沿
                     </h2>
-                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">创新动态</span>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">点击展开</span>
                 </div>
-                <div id="tech-zh" class="grid gap-4 sm:grid-cols-2">
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- TECH_NEWS_ZH_START -->
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.05s">
-    <a href="https://www.nytimes.com/2026/05/14/technology/anduril-raises-5-billion.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anduril 融资50亿美元，估值飙至610亿</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">纽约时报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">国防科技初创公司 Anduril 完成一轮高达50亿美元的融资，估值翻倍至610亿美元，反映出在全球冲突背景下，投资者对人工智能军事系统的强烈信心。</p>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">为什么"智能"产品开始看起来像愚蠢的选择</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:04 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Wi-Fi连接和基于应用的科技如何引发了一场以简约为名的反弹。</p>
+    <a href="https://www.nytimes.com/2026/05/14/magazine/dumb-phones-tvs-retronym-smart-tech.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.1s">
-    <a href="https://www.reuters.com/technology/anthropic-funding-950-billion-valuation-2026-05-14/" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">Anthropic 估值逼近1万亿美元，AI投资热潮持续</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">路透社</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">人工智能公司 Anthropic 正在谈判新一轮融资，估值有望逼近1万亿美元，与 OpenAI 估值相当，再次印证资本市场对尖端AI领域的疯狂追捧。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">伊什梅尔·里德正在创作一部关于埃隆·马斯克的戏剧</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:02 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">88岁的作家伊什梅尔·里德，一位经常挑战美国政治文化的作家，正在撰写一部关于埃隆·马斯克和其他科技亿万富翁的戏剧。</p>
+    <a href="https://www.nytimes.com/2026/05/14/technology/ishmael-reed-elon-musk-play.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.15s">
-    <a href="https://www.bbc.com/zhongwen/simp/technology-china-ai-chip-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">芯片出口管制成为特朗普-习近平科技议程核心</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">英伟达CEO黄仁勋等科技领袖随特朗普代表团访问北京，半导体出口限制和AI竞争成为中美科技讨论的焦点议题。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">加密货币行业推动法案 使监管偏向自身利益</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 09:00 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">在特朗普总统领导下取得一系列政治胜利后，加密货币公司正在游说国会通过一个它们帮助起草的全面监管框架。</p>
+    <a href="https://www.nytimes.com/2026/05/14/technology/cryptocurrency-clarity-act-senate.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.2s">
-    <a href="https://apnews.com/article/ai-lobbying-washington-openai-anthropic-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">硅谷AI巨头在华盛顿游说投入创纪录1亿美元</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">美联社</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">OpenAI、Anthropic、Google DeepMind等AI公司在上个季度共花费超过1亿美元用于游说，力求塑造将决定行业未来数十年的监管框架。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">英国税务海关总署将使用英国科技公司AI识别欺诈和报税错误</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 05:10 GMT</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">金融数据平台Quantexa赢得了1.75亿英镑的合同，用于识别欺诈和报税错误。</p>
+    <a href="https://www.bbc.com/news/articles/c7v9ld262n4o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.25s">
-    <a href="https://www.nytimes.com/2026/05/14/technology/recursive-superintelligence-funding-ai.html" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">顶尖研究员加入40亿美元项目，研发自我进化AI</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">纽约时报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">来自全球的多位顶级AI研究员汇聚于一项耗资40亿美元的计划，致力于开发可递归自我改进的人工智能系统，向通用人工智能迈出关键一步。</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.3s">
-    <a href="https://news.cctv.com/2026/05/14/china-ai-breakthrough-llm" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">中国发布新一代大语言模型，性能媲美GPT-5</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">央视</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">中国多家顶级AI实验室联合发布全新大语言模型，在关键基准测试中达到GPT-5水平，展示了中美科技竞争加剧背景下北京的技术雄心。</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.35s">
-    <a href="https://news.ifeng.com/c/2026-05-14/huawei-5g-europe-contract" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">华为与欧洲运营商签署30亿美元5G合同</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">凤凰卫视</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">华为与一家欧洲主要电信运营商签署价值30亿美元的5G设备供应合同，这是自美国主导的限制措施实施以来，华为在欧洲最大规模的业务拓展。</p>
-    </a>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl shadow-md p-5 news-card fade-in" style="animation-delay: 0.4s">
-    <a href="https://www.zaobao.com.sg/tech/global-ev-sales-iran-oil-2026" target="_blank" rel="noopener noreferrer" class="block">
-        <h3 class="font-semibold text-lg text-slate-900 dark:text-white mb-1 leading-snug">伊朗战争推高油价，全球电动车销量飙升40%</h3>
-        <div class="flex items-center gap-2 mb-2">
-            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">受伊朗冲突影响，国际油价突破每桶120美元，全球电动车销量同比增长40%，中国和欧洲引领转型步伐，而美国市场增速落后。</p>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">旨在将地热能主流化的创业公司上市</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">NYT</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日 00:42 UTC</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">Fervo Energy利用石油和天然气行业的钻探技术从地球热量中发电，在首次公开募股中筹集了19亿美元。</p>
+    <a href="https://www.nytimes.com/2026/05/13/business/energy-environment/fervo-geothermal-energy-ipo.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">
+        阅读全文 →
     </a>
 </div>
                     <!-- TECH_NEWS_ZH_END -->
@@ -481,24 +697,37 @@
 
     <!-- Footer -->
     <footer class="fixed bottom-0 w-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 py-3 px-4 text-center">
-        <div class="max-w-4xl mx-auto flex items-center justify-center gap-4 text-xs text-slate-400 dark:text-slate-500">
+        <div class="max-w-3xl mx-auto flex items-center justify-center gap-4 text-xs text-slate-400 dark:text-slate-500">
             <span>Powered by Hermes Agent &amp; GitHub Pages</span>
-            <span class="hidden sm:inline">·</span>
-            <span class="hidden sm:inline">Updated Daily at 8 AM NZST</span>
+            <span>·</span>
+            <span>Updated Daily at 8 AM NZST</span>
             <span>·</span>
             <span id="update-badge" class="text-indigo-500 dark:text-indigo-400 font-medium">✨ Live</span>
         </div>
     </footer>
 
-    <!-- Language Switch Script -->
+    <!-- Accordion Script -->
     <script>
+        function toggleNews(btn) {
+            const body = btn.nextElementSibling;
+            const isOpen = body.classList.contains('open');
+            btn.closest('.divide-y').querySelectorAll('.accordion-body.open').forEach(b => {
+                if (b !== body) {
+                    b.classList.remove('open');
+                    b.previousElementSibling.classList.remove('open');
+                }
+            });
+            body.classList.toggle('open');
+            btn.classList.toggle('open');
+        }
+
         function switchLang(lang) {
             document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('panel-' + lang).classList.add('active');
             document.getElementById('lang-' + lang).classList.add('active');
         }
-        // Dark mode
+
         if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
         }
