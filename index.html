@@ -3,54 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World News Brief | JimJian2023</title>
+    <title>World News Brief</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #f8fafc; }
-        .news-card { transition: transform 0.2s; }
-        .news-card:hover { transform: translateY(-2px); }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .fade-in { animation: fadeIn 0.6s ease-out both; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .news-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .news-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.12); }
+        .dark .news-card:hover { box-shadow: 0 12px 24px -8px rgba(0,0,0,0.4); }
+        .section-link { text-decoration: none; }
+        .section-link:hover span { text-decoration: underline; }
+        .gradient-header { background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #3730a3 100%); }
+        .dark .gradient-header { background: linear-gradient(135deg, #0f0d2e 0%, #1e1b4b 50%, #312e81 100%); }
     </style>
 </head>
-<body class="text-slate-800 font-sans leading-relaxed">
-    <header class="bg-indigo-700 text-white py-8 px-4 shadow-lg mb-8">
-        <div class="max-w-3xl mx-auto text-center">
-            <h1 class="text-3xl font-bold tracking-tight">🌍 World News Brief</h1>
-            <p class="mt-2 text-indigo-100 opacity-90">Daily Intelligence for Ning</p>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-10 px-4 shadow-xl mb-10 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">🌍 World News Brief</h1>
+            <p class="text-lg text-indigo-200 font-medium">Daily Intelligence, Curated for You</p>
+            <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
+                <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">
+                    <!-- DATE_HERE -->
+                </span>
+                <span class="bg-white/10 px-3 py-1 rounded-full">New Zealand</span>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-3xl mx-auto px-4 pb-20">
-        <div id="date-display" class="text-center mb-8 font-medium text-slate-500 italic">
-            <!-- DATE_HERE -->
-        </div>
+    <main class="max-w-4xl mx-auto px-4 pb-24">
 
-        <!-- World Headlines Section -->
-        <section class="mb-12">
-            <h2 class="flex items-center text-xl font-bold mb-4 text-indigo-900 border-b-2 border-indigo-200 pb-2">
-                <span class="mr-2">📰</span> World Headlines
-            </h2>
-            <div id="headlines" class="space-y-4">
+        <!-- World Headlines -->
+        <section class="mb-14 fade-in">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                    <span class="mr-3 text-3xl">📰</span> World Headlines
+                </h2>
+                <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Top Stories</span>
+            </div>
+            <div id="headlines" class="grid gap-4 sm:grid-cols-2">
                 <!-- WORLD_NEWS_START -->
-                <p class="text-slate-400 italic text-center py-4">Your daily briefing is being prepared...</p>
+                <div class="col-span-full text-center py-12">
+                    <p class="text-slate-400 dark:text-slate-600 text-lg italic">🌅 Today's briefing is being prepared...</p>
+                    <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">Check back at 8 AM NZ time for the latest</p>
+                </div>
                 <!-- WORLD_NEWS_END -->
             </div>
         </section>
 
-        <!-- Tech Frontiers Section -->
-        <section class="mb-12">
-            <h2 class="flex items-center text-xl font-bold mb-4 text-indigo-900 border-b-2 border-indigo-200 pb-2">
-                <span class="mr-2">🚀</span> Tech Frontiers
-            </h2>
-            <div id="tech" class="space-y-4">
+        <!-- Tech Frontiers -->
+        <section class="mb-14 fade-in" style="animation-delay: 0.15s">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                    <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
+                </h2>
+                <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Innovation</span>
+            </div>
+            <div id="tech" class="grid gap-4 sm:grid-cols-2">
                 <!-- TECH_NEWS_START -->
-                <p class="text-slate-400 italic text-center py-4">Searching for the latest breakthroughs...</p>
+                <div class="col-span-full text-center py-12">
+                    <p class="text-slate-400 dark:text-slate-600 text-lg italic">🔬 Scanning the horizon for breakthroughs...</p>
+                    <p class="text-slate-300 dark:text-slate-700 text-sm mt-2">Updated daily with the latest in tech</p>
+                </div>
                 <!-- TECH_NEWS_END -->
             </div>
         </section>
+
     </main>
 
-    <footer class="fixed bottom-0 w-full bg-white border-t border-slate-200 py-3 px-4 text-center text-xs text-slate-400">
-        Powered by Hermes Agent & GitHub Pages | Updated Daily
+    <!-- Footer -->
+    <footer class="fixed bottom-0 w-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 py-3 px-4 text-center">
+        <div class="max-w-4xl mx-auto flex items-center justify-center gap-4 text-xs text-slate-400 dark:text-slate-500">
+            <span>Powered by Hermes Agent &amp; GitHub Pages</span>
+            <span class="hidden sm:inline">·</span>
+            <span class="hidden sm:inline">Updated Daily at 8 AM NZST</span>
+            <span>·</span>
+            <span id="update-badge" class="text-indigo-500 dark:text-indigo-400 font-medium">✨ Live</span>
+        </div>
     </footer>
+
+    <!-- Dark mode toggle (auto) -->
+    <script>
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            document.documentElement.classList.toggle('dark', e.matches);
+        });
+    </script>
 </body>
 </html>
