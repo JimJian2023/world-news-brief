@@ -40,7 +40,7 @@
             <h1 class="text-xl sm:text-2xl font-bold tracking-tight">🌍 World News Brief</h1>
             <p class="text-xs text-indigo-200 mt-1">Click a headline to read the full story</p>
             <div class="mt-2 flex items-center justify-center gap-2 text-xs text-indigo-300">
-                <span id="date-display" class="bg-white/10 px-2 py-0.5 rounded-full"><!-- DATE_HERE --></span>
+                <span id="date-display" class="bg-white/10 px-2 py-0.5 rounded-full">Friday, 15 May 2026 · Auckland, NZ</span>
             </div>
             <div class="mt-2 inline-flex bg-white/10 rounded-full p-0.5 text-xs">
                 <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-3 py-1 rounded-full">🇬🇧 EN 中英</button>
@@ -58,19 +58,19 @@
                 <section class="mb-8 fade-in">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="flex items-center text-xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-2 text-2xl">📰</span> World Headlines</h2>
-                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full"><!-- EN_WORLD_COUNT --> stories</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">0 stories</span>
                     </div>
                     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden" id="en-world-list">
-                        <!-- EN_WORLD_LIST -->
+                        
                     </div>
                 </section>
                 <section class="mb-8 fade-in" style="animation-delay: 0.1s">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="flex items-center text-xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-2 text-2xl">🚀</span> Tech Frontiers</h2>
-                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full"><!-- EN_TECH_COUNT --> stories</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">0 stories</span>
                     </div>
                     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden" id="en-tech-list">
-                        <!-- EN_TECH_LIST -->
+                        
                     </div>
                 </section>
                 <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">Sources: BBC · New York Times · RT · Al Jazeera</div>
@@ -88,19 +88,33 @@
                 <section class="mb-8 fade-in">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="flex items-center text-xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-2 text-2xl">📰</span> 世界头条</h2>
-                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full"><!-- ZH_WORLD_COUNT --> 条</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">12 条</span>
                     </div>
                     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden" id="zh-world-list">
-                        <!-- ZH_WORLD_LIST -->
+                        <a href="#" onclick="openArticle('zh','zw0');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">林志玲接任文策院董事　賈永婕嗨喊：我還是最美董事長</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw1');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">行政院拍板「連續受益人信託」　王世堅憂喊：小心恐開避稅大門</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw2');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">國家隊轉行做外送茶？！能源署官網淪陷驚見「超猛內容」</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw3');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">新竹縣選舉像「天堂路」！鄭朝方：未來交由市民、縣民來決定</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw4');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">國防部粉專稱軍購預算大砍「對戰力打擊無法估計」！網灌爆嗆：先幫軍人加薪</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw5');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">國宴款待川普　習近平：讓美國再次偉大與實現中華民族復興並行不悖！</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw6');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">談習川會！蔡英文：台灣昔有統獨之爭 、現有靠美或靠中議題</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw7');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">台中醫美診所逼女員工半裸互拍　盧秀燕怒：啟動調查研議規範</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw8');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">習近平稱「台海和平是最大公約數」　陸委會：類似發言見怪不怪</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw9');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">習川會雙方可以談出好結果！龔明鑫強調：台美經貿關係不變</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw10');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">「習川會」不賣台改賣日？媒體人驚曝川普盤算：已對傳統盟友失望透頂</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
+<a href="#" onclick="openArticle('zh','zw11');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">醫美診所涉偷拍風波延燒　卓榮泰：全力查緝零容忍保護隱私</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">中天新闻</span></a>
                     </div>
                 </section>
                 <section class="mb-8 fade-in" style="animation-delay: 0.1s">
                     <div class="flex items-center justify-between mb-3">
                         <h2 class="flex items-center text-xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-2 text-2xl">🚀</span> 科技前沿</h2>
-                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full"><!-- ZH_TECH_COUNT --> 条</span>
+                        <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">4 条</span>
                     </div>
                     <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden" id="zh-tech-list">
-                        <!-- ZH_TECH_LIST -->
+                        <a href="#" onclick="openArticle('zh','zt0');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">新加坡太空实验室启用 加速太空技术商业应用</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">联合早报</span></a>
+<a href="#" onclick="openArticle('zh','zt1');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">下午察：耿同学的“五连发”举报</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">联合早报</span></a>
+<a href="#" onclick="openArticle('zh','zt2');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">假冒总理秘书邀与总理开会 男子“助解中东困局”被骗近500万元</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">联合早报</span></a>
+<a href="#" onclick="openArticle('zh','zt3');return false" class="headline-item flex items-center justify-between gap-3"><span class="font-semibold text-sm sm:text-base text-slate-900 dark:text-white">野鸡遭粗暴捕捉引争议 关爱动物研究协会举报促查</span><span class="text-xs text-slate-400 dark:text-slate-500 shrink-0 whitespace-nowrap">联合早报</span></a>
                     </div>
                 </section>
                 <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">来源：央视 · 凤凰卫视 · 中天新闻 · 联合早报 · 观察者网 · 参考消息</div>
@@ -123,7 +137,7 @@
 
     <script>
         // News data embedded as JSON
-        window.newsData = <!-- NEWS_JSON -->;
+        window.newsData = {"en_world": [], "en_tech": [], "zh_world": [{"id": "zw0", "source": "中天新闻", "headline": "林志玲接任文策院董事　賈永婕嗨喊：我還是最美董事長", "date": "Thu, 14 May 2026 23:08:35", "content": "<p>「台灣第一名模」林志玲接任文化內容策進院（文策院）董事一職正式宣布，隨即引起網路熱烈討論。對此，台北101董事長賈永婕發文，並幽默笑稱，「我還是最美董事長」。</p>", "url": "https://ctinews.com/news/items/KwnKdXNXWY"}, {"id": "zw1", "source": "中天新闻", "headline": "行政院拍板「連續受益人信託」　王世堅憂喊：小心恐開避稅大門", "date": "Thu, 14 May 2026 22:57:12", "content": "<p>金管會積極推動建立「亞洲資產管理中心」，行政院日前拍板「連續受益人信託」制度，確立百年信託架構。民進黨立委王世堅在財委會質詢金管會主委彭金隆表示，儘管政策初衷美好，但必須審慎評估潛在的稅收風險與社會影響。</p>", "url": "https://ctinews.com/news/items/vZWBVl0AW7"}, {"id": "zw2", "source": "中天新闻", "headline": "國家隊轉行做外送茶？！能源署官網淪陷驚見「超猛內容」", "date": "Thu, 14 May 2026 22:32:57", "content": "<p>政府部門官網驚傳資安大漏洞！14日有網友在PTT爆料，經濟部能源署旗下的「太陽光電單一服務窗口」官方連結，點擊後竟然不是預期的綠能資訊，而是直接導向充斥「外送茶」與性交易資訊的色情網站。隨後網友更發現，此類異常連結如病毒般蔓延，包括水利署、環境部、國發會，甚至高雄市與彰化縣政府等公部門網頁，皆因串連該網址而集體「淪陷」，引發社會各界譁然。</p>", "url": "https://ctinews.com/news/items/yDa2NReNaK"}, {"id": "zw3", "source": "中天新闻", "headline": "新竹縣選舉像「天堂路」！鄭朝方：未來交由市民、縣民來決定", "date": "Thu, 14 May 2026 22:16:36", "content": "<p>距離2026九合一大選投票已剩不到7個月，其中新竹縣長部分，國民黨已確定由立委徐欣瑩參選，民進黨新竹縣長人選仍未定案。竹北市長鄭朝方今（14）日受訪時，對於是否參選新竹縣長並未正面表態，僅表示「交由市民或縣民決定」，同時形容新竹縣選舉對他而言就像是「天堂路」，相當辛苦。</p>", "url": "https://ctinews.com/news/items/m0x7k59dxv"}, {"id": "zw4", "source": "中天新闻", "headline": "國防部粉專稱軍購預算大砍「對戰力打擊無法估計」！網灌爆嗆：先幫軍人加薪", "date": "Thu, 14 May 2026 21:58:04", "content": "<p>立法院8日院會上三讀通過藍白共推7800億元國防特別條例，較行政院提出1.25兆元版本少了4700億元。政院指出，勢必將造成國防戰力缺口、影響國內相關產業自主發展，臉書粉專「國防部發言人」也稱此舉會對戰力打擊無法估計。只不過相關言論一出，網友們卻不買單，紛紛在留言區砲轟，更要求「先給國軍加薪再說」。</p>", "url": "https://ctinews.com/news/items/4OaZq912W6"}, {"id": "zw5", "source": "中天新闻", "headline": "國宴款待川普　習近平：讓美國再次偉大與實現中華民族復興並行不悖！", "date": "Thu, 14 May 2026 20:53:57", "content": "<p>美國總統川普（Donald Trump）與大陸國家主席習近平今（14）日舉行「習川會」，晚間習近平在北京人民大會堂宴請川普。兩國領導人就雙邊關係發展交換意見，強調中美合作對全球和平與繁榮的重要性。習近平提到，讓美國再次偉大，與中華民族復興可並行不悖。</p>", "url": "https://ctinews.com/news/items/MyWk4ZJda6"}, {"id": "zw6", "source": "中天新闻", "headline": "談習川會！蔡英文：台灣昔有統獨之爭 、現有靠美或靠中議題", "date": "Thu, 14 May 2026 20:46:26", "content": "<p>習川會今日登場，前總統蔡英文今在東海大學演講時，也被問到對川習會看法，她認為台灣面臨的是罕見且複雜的外部情勢，指出以前有統獨之爭，現在有台灣究竟是要靠向以美國為首的民主國家，還是靠向感覺正在強大的中國大陸。她表示台灣沒有立即的危險，但台灣也不會永久安全。她強調台灣就是因為太好才被國際社會關注，更直言「你能夠掌握台灣，就是掌握下一個世代、AI世紀最重要的元素」。</p>", "url": "https://ctinews.com/news/items/Jpnq4g21xM"}, {"id": "zw7", "source": "中天新闻", "headline": "台中醫美診所逼女員工半裸互拍　盧秀燕怒：啟動調查研議規範", "date": "Thu, 14 May 2026 20:13:31", "content": "<p>台中市北屯區某醫美診所爆發重大違法事件。市議員林祈烽在市議會質詢時揭露，該診所以「模擬隆胸術前拍攝訓練」為由，強迫新進女員工僅穿內褲、貼胸貼半裸互拍，並將照片傳至大廳電腦供主管檢視。台中市長盧秀燕強調，市府將會啟動調查，若屬實最高將裁罰30萬元，並承諾會請相關局處研議規範。</p>", "url": "https://ctinews.com/news/items/ogxw4w00nG"}, {"id": "zw8", "source": "中天新闻", "headline": "習近平稱「台海和平是最大公約數」　陸委會：類似發言見怪不怪", "date": "Thu, 14 May 2026 19:44:57", "content": "<p>美國總統川普（Donald Trump）與大陸國家主席習近平今（14）日舉行「習川會」，引發各界高度關注。對於習近平在會談中提及台灣議題，陸委會副主委兼發言人梁文傑表示，國安團隊密切注意川習會的發展過程與結果，並與美方保持密切聯繫，「目前為止並沒有令人意外的訊息」。</p>", "url": "https://ctinews.com/news/items/rPnv4ym9aY"}, {"id": "zw9", "source": "中天新闻", "headline": "習川會雙方可以談出好結果！龔明鑫強調：台美經貿關係不變", "date": "Thu, 14 May 2026 18:12:15", "content": "<p>美國總統川普（Donald Trump）率領龐大訪華團隊於今（14）日與大陸國家主席習近平舉行會談。經濟部長龔明鑫下午主持會議前受訪時指出，他樂見「習川會」美中可以談出好結果，讓雙方關係和緩，「我們樂觀其成」，他認為台美深化經貿關係，這場會面應該對台灣不會有太大影響。</p>", "url": "https://ctinews.com/news/items/4Xam4J2JWA"}, {"id": "zw10", "source": "中天新闻", "headline": "「習川會」不賣台改賣日？媒體人驚曝川普盤算：已對傳統盟友失望透頂", "date": "Thu, 14 May 2026 17:59:39", "content": "<p>習川會今日在北京登場，有媒體人觀察美國總統川普在行前被記者追問台灣問題，特別提出台灣跟美國距離很遠，並點名日本很挺台灣的說法，他在其粉專解析背後意涵，直言這次習川會台灣上了菜單，然而菜單上寫了台灣但不為賣台，其實是要賣日，對中美來說，這是筆對彼此都划算的交易。</p>", "url": "https://ctinews.com/news/items/dyny401VxZ"}, {"id": "zw11", "source": "中天新闻", "headline": "醫美診所涉偷拍風波延燒　卓榮泰：全力查緝零容忍保護隱私", "date": "Thu, 14 May 2026 17:19:08", "content": "<p>行政院長卓榮泰今（14）日於行政院會聽取法務部、內政部及衛生福利部說明近期發生診所竊錄影像案後表示，法務部及內政部警政署已成立專案偵辦，依照《刑法》、《個人資料保護法》、《醫療法》等法規，必須加強查緝不法偷拍行為，並全力阻斷影像散布，防止二次傷害，也請地方政府全力配合執行。</p>", "url": "https://ctinews.com/news/items/8knJklBqWo"}], "zh_tech": [{"id": "zt0", "source": "联合早报", "headline": "新加坡太空实验室启用 加速太空技术商业应用", "date": "2026-05-15", "content": "<p>新加坡太空实验室启用 加速太空技术商业应用</p>", "url": "https://www.zaobao.com.sg/news/china/story20260514-9050820"}, {"id": "zt1", "source": "联合早报", "headline": "下午察：耿同学的“五连发”举报", "date": "2026-05-15", "content": "<p>下午察：耿同学的“五连发”举报</p>", "url": "https://www.zaobao.com.sg/news/singapore/story20260514-9050126"}, {"id": "zt2", "source": "联合早报", "headline": "假冒总理秘书邀与总理开会 男子“助解中东困局”被骗近500万元", "date": "2026-05-15", "content": "<p>假冒总理秘书邀与总理开会 男子“助解中东困局”被骗近500万元</p>", "url": "https://www.zaobao.com.sg/news/singapore/story20260514-9049383"}, {"id": "zt3", "source": "联合早报", "headline": "野鸡遭粗暴捕捉引争议 关爱动物研究协会举报促查", "date": "2026-05-15", "content": "<p>野鸡遭粗暴捕捉引争议 关爱动物研究协会举报促查</p>", "url": "https://www.zaobao.com.sg/news/singapore/story20260514-9046008"}]};
 
         function openArticle(panel, id) {
             const data = window.newsData;
