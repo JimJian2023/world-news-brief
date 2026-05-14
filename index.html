@@ -47,18 +47,16 @@
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
 
     <!-- Header -->
-    <header class="gradient-header text-white py-10 px-4 shadow-xl mb-10 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);"></div>
+    <header class="gradient-header text-white py-5 px-4 shadow-md mb-5 relative overflow-hidden">
         <div class="max-w-3xl mx-auto text-center relative z-10">
-            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">🌍 World News Brief</h1>
-            <p class="text-lg text-indigo-200 font-medium">Click a headline to read the full story</p>
-            <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
-                <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">Thursday, 14 May 2026 · Auckland, NZ</span>
-                <span class="bg-white/10 px-3 py-1 rounded-full">New Zealand</span>
+            <h1 class="text-xl sm:text-2xl font-bold tracking-tight">🌍 World News Brief</h1>
+            <p class="text-xs text-indigo-200 mt-1">Click a headline to read the full story</p>
+            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-indigo-300">
+                <span id="date-display" class="bg-white/10 px-2 py-0.5 rounded-full">Thursday, 14 May 2026 · Auckland, NZ</span>
             </div>
-            <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 text-sm">
-                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-4 py-1.5 rounded-full">🇬🇧 English 中英对照</button>
-                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-4 py-1.5 rounded-full">🇨🇳 中文 中文来源</button>
+            <div class="mt-2 inline-flex bg-white/10 rounded-full p-0.5 text-xs">
+                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-3 py-1 rounded-full">🇬🇧 EN 中英</button>
+                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-3 py-1 rounded-full">🇨🇳 中文</button>
             </div>
         </div>
     </header>
@@ -507,7 +505,7 @@
         <div class="max-w-3xl mx-auto flex items-center justify-center gap-4 text-xs text-slate-400 dark:text-slate-500">
             <span>Powered by Hermes Agent &amp; GitHub Pages</span>
             <span>·</span>
-            <span>Updated at 9 AM &amp; 5 PM NZST</span>
+            <span>Updated Daily at 8 AM NZST</span>
         </div>
     </footer>
 
