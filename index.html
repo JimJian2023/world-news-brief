@@ -32,102 +32,719 @@
         .dark .accordion-btn.open { background-color: rgba(99,102,241,0.1); }
         .accordion-icon { transition: transform 0.3s ease; font-size: 1.25rem; line-height: 1; }
         .accordion-btn.open .accordion-icon { transform: rotate(45deg); }
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease; opacity: 0; padding: 0 1.25rem; }
-        .accordion-body.open { max-height: 400px; opacity: 1; padding: 0 1.25rem 1.25rem; }
+        .accordion-body {
+            max-height: 0; overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0; padding: 0 1.25rem;
+        }
+        .accordion-body.open {
+            max-height: 400px; opacity: 1; padding: 0 1.25rem 1.25rem;
+        }
         .fade-in { animation: fadeIn 0.5s ease-out both; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
-    <header class="gradient-header text-white py-5 px-4 shadow-md mb-5 relative overflow-hidden">
+
+    <!-- Header -->
+    <header class="gradient-header text-white py-10 px-4 shadow-xl mb-10 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);"></div>
         <div class="max-w-3xl mx-auto text-center relative z-10">
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight">🌍 World News Brief</h1>
-            <p class="text-xs text-indigo-200 mt-1">Click a headline to read the full story</p>
-            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-indigo-300">
-                <span id="date-display" class="bg-white/10 px-2 py-0.5 rounded-full"><!-- DATE_HERE --></span>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">🌍 World News Brief</h1>
+            <p class="text-lg text-indigo-200 font-medium">Click a headline to read the full story</p>
+            <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
+                <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">Thursday, 14 May 2026 · Auckland, NZ</span>
+                <span class="bg-white/10 px-3 py-1 rounded-full">New Zealand</span>
             </div>
-            <div class="mt-2 inline-flex bg-white/10 rounded-full p-0.5 text-xs">
-                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-3 py-1 rounded-full">🇬🇧 EN 中英</button>
-                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-3 py-1 rounded-full">🇨🇳 中文</button>
+            <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 text-sm">
+                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-4 py-1.5 rounded-full">🇬🇧 English 中英对照</button>
+                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-4 py-1.5 rounded-full">🇨🇳 中文 中文来源</button>
             </div>
         </div>
     </header>
+
     <main class="max-w-3xl mx-auto px-4 pb-24">
+
+        <!-- ===== ENGLISH PANEL: BBC/NYT with Chinese translation ===== -->
         <div id="panel-en" class="content-panel active">
+
             <section class="mb-10 fade-in">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-3 text-3xl">📰</span> World Headlines <span class="ml-3 text-xs font-normal text-slate-400">中英对照</span></h2>
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">📰</span> World Headlines
+                        <span class="ml-3 text-xs font-normal text-slate-400">中英对照</span>
+                    </h2>
                     <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Click to expand</span>
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- WORLD_NEWS_EN_START -->
-                    <div class="text-center py-12 text-slate-400 dark:text-slate-600 italic">🌅 Today's briefing is being prepared...</div>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Latvian PM resigns after row over stray Ukrainian drones</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 10:53:56</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Drones bound for Russia crashed down in Latvia last week, prompting a political fallout.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Latvian PM resigns after row over stray Ukrainian drones的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cwy21k5917jo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Watch: What happened on day one of Trump's China visit?</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 07:13:24</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">China welcomed US President Donald Trump with cheering children and a troop parade on Thursday, before a nearly two-hour long meeting with Xi-Jinping.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Watch: What happened on day one of Trump's China visit?的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/videos/c707xn4ew3po?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Court overturns Alex Murdaugh's murder convictions and orders new trial</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 00:38:56</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The court has ordered a new trial over the June 2021 killings of Paul and Maggie Murdaugh.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Court overturns Alex Murdaugh's murder convictions and orders new trial的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cedpvnq7wn1o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">'They shot my neighbour in the head' - the lakeside city traumatised by war</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 05:09:04</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Rebel fighters and Rwandan troops are accused of committing atrocities after capturing the DR Congo city of Uvira in December.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（'They shot my neighbour in the head' - the lakeside city traumatised by war的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cy42dgj0x32o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Rescuers pull dead from rubble of Kyiv flats after massive Russian strikes</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 11:10:30</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">A girl, 12, is among the dead after Russia launched attacks across Ukraine overnight, officials say.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Rescuers pull dead from rubble of Kyiv flats after massive Russian strikes的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cq5p8yygq94o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Cuba has run out of diesel and oil, energy minister says</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:06:23</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The minister says the situation in Cuba is "extremely tense", as a US-led blockade of oil to the country causes widespread power cuts.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Cuba has run out of diesel and oil, energy minister says的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cd7pyrj0vx7o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">What to know as Trump visits Xi in China</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:05:31</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Trump has landed in Beijing for the first visit by a US leader since his own in 2017.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（What to know as Trump visits Xi in China的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cyv2n7l1z14o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Nigerian film star Alexx Ekubo dies from cancer aged 40</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 06:25:29</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The actor was recognised for his contributions to entertainment as well as his humanitarian efforts.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Nigerian film star Alexx Ekubo dies from cancer aged 40的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/c74d1j2ew0yo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">In pictures: Trump hosted by Xi Jinping in Beijing on two-day summit</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:44:23</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">President Trump was welcomed by President Xi Jinping in Beijing for what will be a whirlwind tour.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（In pictures: Trump hosted by Xi Jinping in Beijing on two-day summit的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/cdxp0g4q3q2o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Key Moments From the First Day of Trump’s China Visit</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 10:26:54</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">During the first round of two days of talks, Xi Jinping issued a stern warning about Taiwan while Trump touted all the top business leaders in his delegation.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Key Moments From the First Day of Trump’s China Visit</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/trump-first-day-china-xi.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Elon Musk Returns to Trump’s Side in Beijing</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:12:29</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Mr. Musk is part of a delegation of business leaders to China, where his interests include Tesla’s electric vehicle factory and solar panels.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Elon Musk Returns to Trump’s Side in Beijing</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/musk-china-trump-xi-beijing.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Inside the Secret Mission to Fly Taiwan’s President to Africa</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:53:18</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">From satellite phone check-ins to a borrowed royal plane, new details show how Taiwan’s leader’s team outwitted China and pulled off an audacious journey to southern Africa.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Inside the Secret Mission to Fly Taiwan’s President to Africa</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/taiwan-eswatini-china-flight.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Duterte Ally Flees to Evade I.C.C. Arrest Warrant After Chaos at Philippine Senate</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:48:03</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Senator Ronald dela Rosa, who is wanted by the International Criminal Court in The Hague, had been holed up in the building when shots rang out.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Duterte Ally Flees to Evade I.C.C. Arrest Warrant After Chaos at Philippine Senate</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/asia/philippines-dela-rosa-senate-icc-warrant-duterte.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Argentina Races To Find Origin of Hantavirus Outbreak</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:04:59</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The scientific investigation into the origin of cruise infection has become entangled with international finger pointing.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Argentina Races To Find Origin of Hantavirus Outbreak</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/americas/hantavirus-cruise-ship-argentina.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Cecilia Flores Became the Voice of Mexican Mothers</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:00:42</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">One of the most prominent activists for Mexico’s disappeared recently found the remains of one missing son. Now she has turned her attention to finding the other.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Cecilia Flores Became the Voice of Mexican Mothers</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/world/americas/cecilia-flores-mexico-disappeared.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
                     <!-- WORLD_NEWS_EN_END -->
                 </div>
             </section>
+
             <section class="mb-10 fade-in" style="animation-delay: 0.15s">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-3 text-3xl">🚀</span> Tech Frontiers <span class="ml-3 text-xs font-normal text-slate-400">中英对照</span></h2>
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
+                        <span class="ml-3 text-xs font-normal text-slate-400">中英对照</span>
+                    </h2>
                     <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Click to expand</span>
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- TECH_NEWS_EN_START -->
-                    <div class="text-center py-12 text-slate-400 dark:text-slate-600 italic">🔬 Scanning the horizon for breakthroughs...</div>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">HMRC to use AI from British tech firm to spot fraud and tax return errors</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 05:10:45</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Quantexa, a financial data platform, won the £175m contract to spot fraud and tax return errors.</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（HMRC to use AI from British tech firm to spot fraud and tax return errors的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.bbc.com/news/articles/c7v9ld262n4o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Why ‘Smart’ Products Have Started to Look Like the Dumb Choice</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:04:10</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">How Wi-Fi-connecting, app-based tech led to a backlash in the name of simplicity</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Why ‘Smart’ Products Have Started to Look Like the Dumb Choice</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/magazine/dumb-phones-tvs-retronym-smart-tech.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Ishmael Reed Is Writing a Play About Elon Musk</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:02:52</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Ishmael Reed, provocateur and playwright, has a few words for the billionaires of Silicon Valley.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Ishmael Reed Is Writing a Play About Elon Musk</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/technology/ishmael-reed-elon-musk-play.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Crypto Industry Pushes a Bill to Tilt Regulation in Its Favor</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 09:00:07</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">After a series of political victories under President Trump, firms are lobbying Congress for a sweeping framework they helped shape.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Crypto Industry Pushes a Bill to Tilt Regulation in Its Favor</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/14/technology/cryptocurrency-clarity-act-senate.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">A Start-Up Aiming to Make Geothermal Energy Mainstream Goes Public</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 00:42:03</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Fervo Energy, which uses drilling techniques from the oil and gas industry to produce power from the earth’s heat, raised $1.9 billion in an initial public offering.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（A Start-Up Aiming to Make Geothermal Energy Mainstream Goes Public</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/13/business/energy-environment/fervo-geothermal-energy-ipo.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Wrongful Death Lawsuits Against OpenAI Test a New Strategy</title</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 01:44:59</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The cases seek to use consumer product safety laws to rein in chatbot companies.</description</p>
+    <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+        <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">（Wrongful Death Lawsuits Against OpenAI Test a New Strategy</title的新闻摘要中文翻译）</p>
+    </div>
+    <a href="https://www.nytimes.com/2026/05/12/technology/chatgpt-lawsuit-wrongful-death.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+</div>
                     <!-- TECH_NEWS_EN_END -->
                 </div>
             </section>
-            <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">Sources: BBC · New York Times · RT · Al Jazeera &nbsp;|&nbsp; English with Chinese translation</div>
+
+            <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">
+                Sources: BBC · New York Times · RT · Al Jazeera &nbsp;|&nbsp; English with Chinese translation
+            </div>
         </div>
+
+        <!-- ===== CHINESE PANEL: Only Chinese news sources ===== -->
         <div id="panel-zh" class="content-panel zh-text">
+
             <section class="mb-10 fade-in">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-3 text-3xl">📰</span> 世界头条</h2>
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">📰</span> 世界头条
+                    </h2>
                     <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">点击展开</span>
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- WORLD_NEWS_ZH_START -->
-                    <div class="text-center py-12 text-slate-400 dark:text-slate-600 italic">🌅 今天的简报正在准备中...</div>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">4月份我国电商物流运行稳中有升</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">4月份我国电商物流运行稳中有升</p>
+    <a href="https://news.cctv.com/2026/05/14/ARTI1B7biQF6Cm9zztL1wvAW260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">外资在华研发中心进入“量质齐升”加速期</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">外资在华研发中心进入“量质齐升”加速期</p>
+    <a href="https://news.cctv.com/2026/05/14/ARTIWi7SYpWlrohb7g5wVfza260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">清洁能源基地项目“进度条”提速</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">清洁能源基地项目“进度条”提速</p>
+    <a href="https://news.cctv.com/2026/05/14/ARTIg79kLUllfvIIWfsMQII1260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">洗衣机能效水效新国标2027年4月1日起实施</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">洗衣机能效水效新国标2027年4月1日起实施</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDE11QhtSuca96GE3iVzDJZ260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">国家医保局 实施医保基金监管五年行动计划</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">国家医保局 实施医保基金监管五年行动计划</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDE1A4YRILxXI3Lp1OLP6ez260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">专家：儿童用药存误区 药品储存要规范</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">专家：儿童用药存误区 药品储存要规范</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDEdSivLtqohksJunELkNuU260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">新闻观察：漫游烟火小城 感知立体中国</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">新闻观察：漫游烟火小城 感知立体中国</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDEwWt8O660b3NDLqVUsilE260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">41项空间科学实验项目随天舟十号上行中国空间站</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">41项空间科学实验项目随天舟十号上行中国空间站</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDE41jmzeQap4PsLGm3C6gW260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">用新闻视角解读文化</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">用新闻视角解读文化</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDEeM9UoBcDwCl53YtU42zG260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">習川會雙方可以談出好結果！龔明鑫強調：台美經貿關係不變</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">中天新闻</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 18:12:15</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">習川會雙方可以談出好結果！龔明鑫強調：台美經貿關係不變</p>
+    <a href="https://ctinews.com/news/items/4Xam4J2JWA" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">「習川會」不賣台改賣日？媒體人驚曝川普盤算：已對傳統盟友失望透頂</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">中天新闻</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 17:59:39</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">「習川會」不賣台改賣日？媒體人驚曝川普盤算：已對傳統盟友失望透頂</p>
+    <a href="https://ctinews.com/news/items/dyny401VxZ" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">醫美診所涉偷拍風波延燒　卓榮泰：全力查緝零容忍保護隱私</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">中天新闻</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| Thu, 14 May 2026 17:19:08</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">醫美診所涉偷拍風波延燒　卓榮泰：全力查緝零容忍保護隱私</p>
+    <a href="https://ctinews.com/news/items/8knJklBqWo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
                     <!-- WORLD_NEWS_ZH_END -->
                 </div>
             </section>
+
             <section class="mb-10 fade-in" style="animation-delay: 0.15s">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300"><span class="mr-3 text-3xl">🚀</span> 科技前沿</h2>
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">🚀</span> 科技前沿
+                    </h2>
                     <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">点击展开</span>
                 </div>
                 <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
                     <!-- TECH_NEWS_ZH_START -->
-                    <div class="text-center py-12 text-slate-400 dark:text-slate-600 italic">🔬 正在扫描科技前沿...</div>
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">“林龙”AI大模型上岗 大山的“数字大脑”</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">CCTV</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">“林龙”AI大模型上岗 大山的“数字大脑”</p>
+    <a href="https://tv.cctv.com/2026/05/14/VIDEod2DlOod74hDpNB5m2X5260514.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">武装无人系统喷气背包 警方试用新科技助海上任务</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">武装无人系统喷气背包 警方试用新科技助海上任务</p>
+    <a href="https://www.zaobao.com.sg/news/china/story20260514-9047388" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">资媒局：AI代理OpenClaw有网安风险 企业和个人须谨慎使用</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">资媒局：AI代理OpenClaw有网安风险 企业和个人须谨慎使用</p>
+    <a href="https://www.zaobao.com.sg/news/singapore/story20260514-9047780" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">将矛头指向AI，看似痛快实则错位</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">观察者网</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">将矛头指向AI，看似痛快实则错位</p>
+    <a href="https://www.guancha.cn/liuhaoyan/2026_05_14_816937.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
+
+<button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+    <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">联想确认成为英伟达H200中国分销商</span>
+    <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+</button>
+<div class="accordion-body">
+    <div class="flex items-center gap-2 mb-2 flex-wrap">
+        <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">观察者网</span>
+        <span class="text-xs text-slate-400 dark:text-slate-500">| 2026-05-14</span>
+    </div>
+    <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">联想确认成为英伟达H200中国分销商</p>
+    <a href="https://www.guancha.cn/economy/2026_05_14_817027.shtml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+</div>
                     <!-- TECH_NEWS_ZH_END -->
                 </div>
             </section>
-            <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">来源：央视 · 凤凰卫视 · 中天新闻 · 联合早报 · 观察者网 · 参考消息</div>
+
+            <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">
+                来源：CCTV · 凤凰卫视 · 中天新闻 · 联合早报 · 观察者网 · 参考消息
+            </div>
         </div>
+
     </main>
+
     <footer class="fixed bottom-0 w-full bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-t border-slate-200 dark:border-slate-700 py-3 px-4 text-center">
         <div class="max-w-3xl mx-auto flex items-center justify-center gap-4 text-xs text-slate-400 dark:text-slate-500">
             <span>Powered by Hermes Agent &amp; GitHub Pages</span>
             <span>·</span>
-            <span>Updated at 9 AM &amp; 5 PM NZST</span>
+            <span>Updated Daily at 8 AM NZST</span>
         </div>
     </footer>
+
     <script>
         function toggleNews(btn) {
             const body = btn.nextElementSibling;
             btn.closest('.divide-y').querySelectorAll('.accordion-body.open').forEach(b => {
-                if (b !== body) { b.classList.remove('open'); b.previousElementSibling.classList.remove('open'); }
+                if (b !== body) {
+                    b.classList.remove('open');
+                    b.previousElementSibling.classList.remove('open');
+                }
             });
             body.classList.toggle('open');
             btn.classList.toggle('open');
         }
+
         function switchLang(lang) {
             document.querySelectorAll('.content-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('panel-' + lang).classList.add('active');
             document.getElementById('lang-' + lang).classList.add('active');
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) { document.documentElement.classList.add('dark'); }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => { document.documentElement.classList.toggle('dark', e.matches); });
+
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+            document.documentElement.classList.toggle('dark', e.matches);
+        });
     </script>
 </body>
 </html>
