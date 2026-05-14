@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World News Brief | JimJian2023</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f8fafc; }
+        .news-card { transition: transform 0.2s; }
+        .news-card:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body class="text-slate-800 font-sans leading-relaxed">
+    <header class="bg-indigo-700 text-white py-8 px-4 shadow-lg mb-8">
+        <div class="max-w-3xl mx-auto text-center">
+            <h1 class="text-3xl font-bold tracking-tight">🌍 World News Brief</h1>
+            <p class="mt-2 text-indigo-100 opacity-90">Curated daily intelligence for Ning</p>
+        </div>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 pb-20">
+        <div id="date-display" class="text-center mb-8 font-medium text-slate-500 italic">
+            Loading latest update...
+        </div>
+
+        <!-- World Headlines Section -->
+        <section class="mb-12">
+            <h2 class="flex items-center text-xl font-bold mb-4 text-indigo-900 border-b-2 border-indigo-200 pb-2">
+                <span class="mr-2">📰</span> World Headlines
+            </h2>
+            <div id="headlines" class="space-y-4">
+                <!-- News items will be injected here -->
+                <p class="text-slate-400 italic text-center py-4">Your daily briefing is being prepared...</p>
+            </div>
+        </section>
+
+        <!-- Tech Frontiers Section -->
+        <section class="mb-12">
+            <h2 class="flex items-center text-xl font-bold mb-4 text-indigo-900 border-b-2 border-indigo-200 pb-2">
+                <span class="mr-2">🚀</span> Tech Frontiers
+            </h2>
+            <div id="tech" class="space-y-4">
+                <!-- News items will be injected here -->
+                <p class="text-slate-400 italic text-center py-4">Searching for the latest breakthroughs...</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="fixed bottom-0 w-full bg-white border-t border-slate-200 py-3 px-4 text-center text-xs text-slate-400">
+        Powered by Hermes Agent & GitHub Pages | Updated Daily
+    </footer>
+
+    <script>
+        // This page will be updated via Git commits. 
+        // For the first load, we'll just show a welcome message.
+        document.getElementById('date-display').innerText = "Welcome! Your first automated brief is coming soon.";
+    </script>
+</body>
+</html>
