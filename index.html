@@ -47,16 +47,18 @@
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-200">
 
     <!-- Header -->
-    <header class="gradient-header text-white py-5 px-4 shadow-md mb-5 relative overflow-hidden">
+    <header class="gradient-header text-white py-10 px-4 shadow-xl mb-10 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.2) 0%, transparent 60%);"></div>
         <div class="max-w-3xl mx-auto text-center relative z-10">
-            <h1 class="text-xl sm:text-2xl font-bold tracking-tight">🌍 World News Brief</h1>
-            <p class="text-xs text-indigo-200 mt-1">Click a headline to read the full story</p>
-            <div class="mt-2 flex items-center justify-center gap-2 text-xs text-indigo-300">
-                <span id="date-display" class="bg-white/10 px-2 py-0.5 rounded-full">Thursday, 14 May 2026 · Auckland, NZ</span>
+            <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-2">🌍 World News Brief</h1>
+            <p class="text-lg text-indigo-200 font-medium">Click a headline to read the full story</p>
+            <div class="mt-4 flex items-center justify-center gap-2 text-sm text-indigo-300">
+                <span id="date-display" class="bg-white/10 px-3 py-1 rounded-full">Thursday, 14 May 2026 · Auckland, NZ</span>
+                <span class="bg-white/10 px-3 py-1 rounded-full">New Zealand</span>
             </div>
-            <div class="mt-2 inline-flex bg-white/10 rounded-full p-0.5 text-xs">
-                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-3 py-1 rounded-full">🇬🇧 EN 中英</button>
-                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-3 py-1 rounded-full">🇨🇳 中文</button>
+            <div class="mt-5 inline-flex bg-white/10 rounded-full p-1 text-sm">
+                <button onclick="switchLang('en')" id="lang-en" class="lang-btn active px-4 py-1.5 rounded-full">🇬🇧 English 中英对照</button>
+                <button onclick="switchLang('zh')" id="lang-zh" class="lang-btn px-4 py-1.5 rounded-full">🇨🇳 中文 中文来源</button>
             </div>
         </div>
     </header>
@@ -83,7 +85,7 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC News</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">China welcomed US President Donald Trump with cheering children and a troop parade on Thursday, before a nearly two-hour long meeting with Xi Jinping covering trade, Taiwan, and global security issues.</p>
@@ -100,15 +102,32 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC News</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
-                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Children are among the injured after Russia launched drones and missiles across Ukraine, officials say. Emergency crews continue searching through debris as Kyiv reels from one of the largest aerial attacks in recent weeks.</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">A 12-year-old girl is among the dead after Russia launched drones and missiles across Ukraine overnight. Emergency crews continue searching through debris as Kyiv reels from one of the largest aerial attacks in recent weeks.</p>
                         <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
                             <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">乌克兰官员表示，俄罗斯向乌克兰全境发动无人机和导弹袭击，造成儿童在内的多人受伤。紧急救援人员继续在废墟中搜寻，基辅正遭受数周来最大规模的空袭之一。</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">乌克兰官员表示，俄罗斯向乌克兰全境发动无人机和导弹袭击，一名12岁女孩在遇难者之列。紧急救援人员继续在废墟中搜寻，基辅正遭受数周来最大规模的空袭之一。</p>
                         </div>
                         <a href="https://www.bbc.com/news/articles/cq5p8yygq94o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Latvian PM resigns after row over stray Ukrainian drones</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Drones bound for Russia crashed down in Latvia last week, prompting a political fallout that has led to the resignation of Prime Minister Evika Silina amid the threat of a no-confidence vote.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">飞往俄罗斯的无人机上周在拉脱维亚坠毁，引发政治风波，导致总理埃维卡·西利娜在不信任投票威胁下宣布辞职。</p>
+                        </div>
+                        <a href="https://www.bbc.com/news/articles/cwy21k5917jo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
                     </div>
                 </div><div class="fade-in">
                     <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
@@ -117,13 +136,13 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC News</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Cuba's energy minister says the situation is 'extremely tense', as a US-led blockade of oil to the country causes widespread power cuts. The country has completely run out of diesel and oil reserves.</p>
                         <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
                             <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
-                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">古巴能源部长表示，由于美国主导的石油封锁导致大面积停电，该国局势"极其紧张"。古巴的柴油和石油储备已经完全耗尽。</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">古巴能源部长表示，由于美国主导的石油封锁导致大面积停电，该国局势“极其紧张”。古巴的柴油和石油储备已经完全耗尽。</p>
                         </div>
                         <a href="https://www.bbc.com/news/articles/cd7pyrj0vx7o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
                     </div>
@@ -134,7 +153,7 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC News</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The court has ordered a new trial over the June 2021 killings of Paul and Maggie Murdaugh, overturning the previous murder convictions of disgraced South Carolina attorney Alex Murdaugh.</p>
@@ -151,7 +170,7 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC News</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Eight children are among those reported dead after a series of air strikes hit the south of Beirut. The strikes mark a significant escalation in cross-border tensions.</p>
@@ -163,12 +182,12 @@
                     </div>
                 </div><div class="fade-in">
                     <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
-                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Flags, Flattery and a Blunt Warning on Trump's First Day in China</span>
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Key Moments From the First Day of Trump's China Visit</span>
                         <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">The New York Times</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">During the first round of two days of talks, Xi Jinping issued a stern warning about Taiwan while Trump touted all the top business leaders in his delegation.</p>
@@ -185,7 +204,7 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">The New York Times</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">From satellite phone check-ins to a borrowed royal plane, new details show how Taiwan's leader's team outwitted China and pulled off an audacious journey to southern Africa.</p>
@@ -202,18 +221,448 @@
                     </button>
                     <div class="accordion-body">
                         <div class="flex items-center gap-2 mb-2 flex-wrap">
-                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">The New York Times</span>
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
                             <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
                         </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Senator Ronald dela Rosa, who is wanted by the International Criminal Court in The Hague, had been holed up in the building when shots rang out. He later fled to evade the arrest warrant.</p>
                         <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
                             <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
                             <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">被国际刑事法院通缉的菲律宾参议员罗纳德·德拉罗莎此前藏身参议院大楼内，现场传出枪声。他随后逃离以躲避逮捕令。</p>
-       
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/world/asia/philippines-dela-rosa-senate-icc-warrant-duterte.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Russia Pummels Kyiv After Putin Hints That War Could End Soon</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">At least five people were killed and dozens were wounded in a drone and missile strike, the latest in a series of attacks since a three-day truce expired on Monday.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">在无人机和导弹袭击中，至少五人死亡，数十人受伤。这是自周一三天停火到期以来一系列攻击中的最新一次。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/world/europe/ukraine-strike-kyiv-russia-putin.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Argentina Races To Find Origin of Hantavirus Outbreak</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The scientific investigation into the origin of a cruise ship hantavirus infection has become entangled with international finger pointing as Argentina races to contain the outbreak.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">对邮轮汉坦病毒爆发源头的科学调查已与国际间的相互指责纠缠在一起，阿根廷正争分夺秒控制疫情。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/world/americas/hantavirus-cruise-ship-argentina.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">China Restores Beef Trade With U.S. as Goodwill Gesture for Trump Visit</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Beijing approved export licenses for hundreds of American slaughterhouses to resume beef shipments, ending a 15-month ban as a goodwill gesture for Trump's visit.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">北京批准了数百家美国屠宰场的出口许可证，恢复牛肉运输，结束了长达15个月的禁令，作为特朗普访华的善意姿态。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/world/asia/trump-china-beef.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Xi warns Trump over Taiwan</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">RT</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Chinese leader Xi Jinping warned US President Donald Trump that a standoff over Taiwan could push the two countries into 'a very dangerous situation,' describing it as the single most important issue in bilateral relations.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">中国领导人习近平警告美国总统特朗普，台湾问题处理不当可能将两国推入“非常危险的境地”，称这是双边关系中最重要的议题。</p>
+                        </div>
+                        <a href="https://www.rt.com/news/639971-xi-warns-trump-taiwan/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">NATO member's government collapses after Ukrainian drone incident</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">RT</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Latvian Prime Minister Evika Silina has resigned amid a government crisis caused by an incident involving Ukrainian kamikaze drones hitting an oil depot near the Russian border.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">拉脱维亚总理埃维卡·西利娜因乌克兰自杀式无人机袭击俄边境附近油库事件引发的政府危机而宣布辞职。</p>
+                        </div>
+                        <a href="https://www.rt.com/news/639977-latvian-prime-minister-resigns/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Gulf states attacked Iraq amid waning faith in US – Reuters</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">RT</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Saudi Arabia and Kuwait conducted covert strikes on targets in Iraq linked to Iranian-backed paramilitary groups during the Middle East war, reflecting fading trust in the US security umbrella.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">据路透社报道，沙特阿拉伯和科威特在中东战争期间对伊拉克境内与伊朗支持的准军事组织有关的目标进行了秘密打击，反映出对美国安全保护伞信任的减弱。</p>
+                        </div>
+                        <a href="https://www.rt.com/news/639970-saudi-arabia-kuwait-strikes-iraq/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">US seeking to convince China to pressure Iran – Rubio</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">RT</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">US Secretary of State Marco Rubio said the US would seek to persuade China to play 'a more active role' in negotiations with Iran amid the ongoing Middle East crisis.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">美国国务卿卢比奥表示，美国将寻求说服中国在伊朗问题上发挥“更积极的作用”，参与正在持续的中东危机谈判。</p>
+                        </div>
+                        <a href="https://www.rt.com/news/639967-rubio-china-pressure-iran/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Who are the US CEOs in China with Trump, and what's in it for them?</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Top executives hope to expand their businesses in China as Trump aims for a win ahead of the midterm vote. Elon Musk is part of a delegation of business leaders to China.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">顶级高管希望在中国拓展业务，而特朗普则希望在中期选举前取得胜利。埃隆·马斯克是随行的商界领袖代表团成员之一。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/who-are-the-us-ceos-in-china-with-trump-and-whats-in-it-for-them" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Russia launches hundreds more drones at Ukraine, killing three people</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">President Volodymyr Zelenskyy says Russia fired 'more than 1,560 drones' at Ukraine since Wednesday, killing at least three people and causing widespread damage.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">乌克兰总统泽连斯基表示，自周三以来俄罗斯向乌克兰发射了“超过1560架无人机”，造成至少三人死亡和大范围破坏。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/russia-launches-hundreds-more-drones-at-ukraine-killing-three-people" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Trump praises China as he ignores question about Taiwan</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">During his visit to Beijing, Trump praised China while avoiding direct comment on the Taiwan question, as the two leaders held high-stakes talks.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">在访问北京期间，特朗普赞扬了中国，同时避免就台湾问题直接发表评论。两国领导人举行了备受瞩目的会谈。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/video/newsfeed/2026/5/14/trump-praises-china-as-he-ignores-question-about-taiwan" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Philippine politician wanted by ICC flees Senate</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Senator Ronald 'Bato' dela Rosa, wanted by the International Criminal Court, fled the Philippine Senate building where he had taken refuge as shots rang out.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">被国际刑事法院通缉的参议员罗纳德·“巴托”·德拉罗莎逃离了菲律宾参议院大楼，此前他一直藏身其中。现场传出枪声。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/philippine-politician-wanted-by-icc-flees-senate" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Iran war day 76: Vance says progress made in talks; Israel pounds Lebanon</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">US Vice President Vance says progress is being made in talks with Iran as President Trump begins his trip to China, while Israel continues strikes on Lebanon.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">美国副总统万斯表示与伊朗的谈判取得进展，总统特朗普开始访华行程，同时以色列继续对黎巴嫩进行打击。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/iran-war-day-76-vance-says-progress-made-in-talks-israel-pounds-lebanon" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Federal judge blocks US sanctions against UN rapporteur Francesca Albanese</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">US sanctions imposed on UN expert Francesca Albanese by the Trump administration were temporarily blocked by a federal judge.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">联邦法官暂时阻止了特朗普政府对联合国专家弗兰切斯卡·阿尔巴内塞实施的制裁。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/federal-judge-blocks-us-sanctions-against-un-rapporteur-francesca-albanese" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Japanese snacks go black-and-white: Why Iran war is driving up ink prices</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">Al Jazeera</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Calbee says it would temporarily use only black and white colours on 14 of its products due to a lack of printing ink caused by the Iran war disrupting supply chains.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">日本卡乐比公司表示，由于伊朗战争导致供应链中断，印刷油墨短缺，将暂时在14种产品上仅使用黑白颜色。</p>
+                        </div>
+                        <a href="https://www.aljazeera.com/news/2026/5/14/japanese-snacks-go-black-and-white-why-iran-war-is-driving-up-ink-prices" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div>                    <!-- WORLD_NEWS_EN_END -->
+                </div>
+            </section>
 
-... [OUTPUT TRUNCATED - 21801 chars omitted out of 71801 total] ...
+            <section class="mb-10 fade-in" style="animation-delay: 0.15s">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">🚀</span> Tech Frontiers
+                        <span class="ml-3 text-xs font-normal text-slate-400">中英对照</span>
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">Click to expand</span>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
+                    <!-- TECH_NEWS_EN_START -->
+<div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">HMRC to use AI from British tech firm to spot fraud and tax return errors</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Quantexa, a financial data platform, won a £175 million contract to help HMRC spot fraud and tax return errors using AI technology.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">金融数据平台Quantexa赢得1.75亿英镑合同，将利用AI技术帮助英国税务海关总署识别欺诈和退税错误。</p>
+                        </div>
+                        <a href="https://www.bbc.com/news/articles/c7v9ld262n4o" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Thousands of Waymos recalled after robotaxi swept into a creek</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The voluntary recall follows an incident on 20 April where an empty Waymo car entered a flooded road in San Antonio, Texas.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">此次自愿召回源于4月20日的一起事件——一辆空的Waymo自动驾驶出租车驶入了德克萨斯州圣安东尼奥的一条被水淹没的道路。</p>
+                        </div>
+                        <a href="https://www.bbc.com/news/articles/cwy2011dl4xo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">WhatsApp launches totally private 'incognito' conversations with its AI chatbot</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">BBC</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">A cyber security expert says deleting chat history could lead to a lack of accountability if things go wrong with the new private AI chatbot feature.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">网络安全专家表示，WhatsApp新推出的AI聊天机器人私密对话功能中删除聊天记录可能导致在出现问题时缺乏问责制。</p>
+                        </div>
+                        <a href="https://www.bbc.com/news/articles/c99lmyr1dnxo" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Why 'Smart' Products Have Started to Look Like the Dumb Choice</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">How Wi-Fi-connecting, app-based technology has led to a growing backlash in the name of simplicity, as consumers increasingly choose 'dumb' alternatives.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">Wi-Fi连接和基于应用的科技产品正引发越来越多的反弹——消费者开始以“追求简约”为名，选择非智能的替代品。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/magazine/dumb-phones-tvs-retronym-smart-tech.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Crypto Industry Pushes a Bill to Tilt Regulation in Its Favor</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">After a series of political victories under President Trump, crypto firms are lobbying Congress for a sweeping regulatory framework they helped shape.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">在特朗普总统任内取得一系列政治胜利后，加密货币企业正游说国会通过它们参与制定的全面监管框架。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/14/technology/cryptocurrency-clarity-act-senate.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Dozens of Polymarket Bets Show Signs of Insider Trading, The Times Finds</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">Dozens of long-shot bets on Polymarket, from the war with Iran to the cryptocurrency market, have defied the odds, according to a New York Times examination.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">《纽约时报》调查发现，Polymarket上的数十个冷门赌注——从伊朗战争到加密货币市场——都出现了异常赔率，显示出内幕交易的迹象。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/13/technology/polymarket-insider-trading.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Anduril Raises $5 Billion in Funding and Is Valued at $61 Billion</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">The start-up, which makes A.I.-backed weapons, was valued at $61 billion in the financing round, double what it was a year ago.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">这家制造AI驱动武器的初创公司在此轮融资中估值达610亿美元，是一年前的两倍。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/13/technology/anduril-raises-5-billion.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">Silicon Valley's A.I. Lobbying Blitz Reaches a Fever Pitch</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">New York Times</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 14 May 2026</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-2">OpenAI and Anthropic are opening offices in Washington, hiring lobbyists and spending more than ever to win over federal lawmakers.</p>
+                        <div class="border-t border-slate-100 dark:border-slate-700 pt-2 mt-2">
+                            <p class="text-xs text-indigo-400 dark:text-indigo-500 font-medium mb-1">🇨🇳 中文</p>
+                            <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">OpenAI和Anthropic正在华盛顿开设办事处、雇佣说客，并投入前所未有的资金以争取联邦立法者的支持。</p>
+                        </div>
+                        <a href="https://www.nytimes.com/2026/05/13/technology/ai-lobbying-washington-openai-anthropic.html" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline mt-2">Read full article →</a>
+                    </div>
+                </div>                    <!-- TECH_NEWS_EN_END -->
+                </div>
+            </section>
 
-      </div>
+            <div class="text-center text-xs text-slate-400 dark:text-slate-600 mt-2 italic">
+                Sources: BBC · New York Times · RT · Al Jazeera &nbsp;|&nbsp; English with Chinese translation
+            </div>
+        </div>
+
+        <!-- ===== CHINESE PANEL: Only Chinese news sources ===== -->
+        <div id="panel-zh" class="content-panel zh-text">
+
+            <section class="mb-10 fade-in">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="flex items-center text-2xl font-bold text-indigo-900 dark:text-indigo-300">
+                        <span class="mr-3 text-3xl">📰</span> 世界头条
+                    </h2>
+                    <span class="text-xs text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-full">点击展开</span>
+                </div>
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm divide-y divide-slate-100 dark:divide-slate-700 overflow-hidden">
+                    <!-- WORLD_NEWS_ZH_START -->
+<div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">习近平：将构建建设性战略稳定关系作为中美关系新定位</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">中国国家主席习近平在与美国总统特朗普会晤时提出，应将构建建设性战略稳定关系作为中美关系的新定位，推动两国关系健康稳定发展。</p>
+                        <a href="https://www.zaobao.com.sg/news/singapore/story20260514-9047294" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
+                    </div>
+                </div><div class="fade-in">
+                    <button onclick="toggleNews(this)" class="accordion-btn w-full flex items-center justify-between px-5 py-4 text-left">
+                        <span class="font-semibold text-base text-slate-900 dark:text-white pr-4">分析：习近平涉台表述较过去更重 凸显北京急迫感</span>
+                        <span class="accordion-icon text-indigo-400 dark:text-indigo-500 shrink-0 text-xl leading-none">+</span>
+                    </button>
+                    <div class="accordion-body">
+                        <div class="flex items-center gap-2 mb-2 flex-wrap">
+                            <span class="text-xs font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30 px-2 py-0.5 rounded-full">联合早报</span>
+                            <span class="text-xs text-slate-400 dark:text-slate-500">| 2026年5月14日</span>
+                        </div>
                         <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-3">学者分析指出，习近平在习川会上关于台湾问题的表述较以往更为严厉，直指台湾问题是中美关系中最重要的问题，处理不好将导致冲突。</p>
                         <a href="https://www.zaobao.com.sg/news/china/story20260514-9047950" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-sm font-medium text-indigo-600 dark:text-indigo-400 hover:underline">阅读全文 →</a>
                     </div>
