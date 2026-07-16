@@ -132,7 +132,13 @@ def main():
     }
     json_str = json.dumps(news_json, ensure_ascii=False)
 
-    with open(f"{PROJECT_DIR}/index.html", "r") as f: html = f.read()
+    # Read template (with placeholders)
+    template_path = f"{PROJECT_DIR}/index_template.html"
+    if os.path.exists(template_path):
+        with open(template_path, "r") as f: html = f.read()
+    else:
+        with open(f"{PROJECT_DIR}/index.html", "r") as f: html = f.read()
+
     date_str = datetime.now().strftime("%A, %d %B %Y") + " \u00b7 Auckland, NZ"
     html = html.replace("<!-- DATE_HERE -->", date_str)
     html = html.replace("<!-- NEWS_JSON -->", json_str)
@@ -145,15 +151,9 @@ def main():
     html = html.replace("<!-- ZH_WORLD_LIST -->", build_headline_html(cn_world, "zh"))
     html = html.replace("<!-- ZH_TECH_LIST -->", build_headline_html(cn_tech, "zh"))
 
-    print("Pushing...", file=sys.stderr)
-    r = subprocess.run(f'curl -s -H "Authorization: token {TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/{OWNER}/{REPO}/contents/index.html" | python3 -c "import sys,json; print(json.load(sys.stdin)[\'sha\'])"', capture_output=True, text=True, shell=True)
-    sha = r.stdout.strip()
-    b64 = base64.b64encode(html.encode()).decode()
-    payload = json.dumps({"message": f"Daily update {datetime.now().strftime('%d %b')}", "content": b64, "sha": sha})
-    with open("/tmp/github_push.json", "w") as f: f.write(payload)
-    r = subprocess.run(f'curl -s -X PUT -H "Authorization: token {TOKEN}" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/{OWNER}/{REPO}/contents/index.html" -d @/tmp/github_push.json', capture_output=True, text=True, shell=True, timeout=30)
-    result = json.loads(r.stdout)
-    print(f"Done: {result.get('content',{}).get('size','?')} bytes", file=sys.stderr)
+    # Save generated HTML to index.html for GitHub Pages
+    with open(f"{PROJECT_DIR}/index.html", "w") as f: f.write(html)
+    print(f"Saved {len(html)} bytes to index.html", file=sys.stderr)
     print(f"EN: {len(en_world)}W+{len(en_tech)}T | ZH: {len(cn_world)}W+{len(cn_tech)}T", file=sys.stderr)
 
 if __name__ == "__main__":
