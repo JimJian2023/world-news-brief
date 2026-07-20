@@ -25,9 +25,9 @@ def parse_rss(url, source):
     from datetime import timedelta
     allowable = [(datetime.now() - timedelta(days=d)).strftime("%d %b %Y") for d in range(2)]
     for item in items:
-        title_m = re.search(r'<title>(?:<!\[CDATA\[)?([^\]>]+)', item)
+        title_m = re.search(r'<title>(?:<!\[CDATA\[)?(.+?)(?:</title>|$)', item)
         link_m = re.search(r'<link>(.*?)</link>', item)
-        desc_m = re.search(r'<description>(?:<!\[CDATA\[)?([^\]>]+)', item)
+        desc_m = re.search(r'<description>(?:<!\[CDATA\[)?(.+?)(?:</description>|$)', item)
         date_m = re.search(r'<pubDate>(.*?)</pubDate>', item)
         if title_m and link_m:
             title = re.sub(r'<!\[CDATA\[|\]\]>', '', title_m.group(1)).strip()
