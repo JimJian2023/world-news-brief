@@ -42,6 +42,17 @@ def today_str():
 def today_compact():
     return datetime.now().strftime("%Y%m%d")
 
+def recent_dates(days=2):
+    """Return list of date strings for the last N days in both / and _ formats."""
+    from datetime import timedelta
+    results_slash = []
+    results_underscore = []
+    for d in range(days):
+        dt = datetime.now() - timedelta(days=d)
+        results_slash.append(dt.strftime("%Y/%m/%d"))
+        results_underscore.append(dt.strftime("%Y_%m_%d"))
+    return results_slash, results_underscore
+
 
 # ============================================================
 # 1. CCTV / 央视 (news.cctv.com)
@@ -56,41 +67,43 @@ def crawl_cctv():
 
     # Extract article links with titles from the HTML
     # Pattern: <a href="https://news.cctv.com/2026/05/14/ARTI...shtml" ...>TITLE</a>
-    today = today_str()
-    escaped_today = today.replace("/", "\\/")
-    pattern = rf'href="(https://news\.cctv\.com/{escaped_today}/ARTI[A-Za-z0-9]+\.shtml)"[^>]*>([^<]+)</a>'
-
+    slash_dates, _ = recent_dates(days=2)
     seen_urls = set()
-    for match in re.finditer(pattern, html_content):
-        url = match.group(1)
-        title = html.unescape(match.group(2)).strip()
-        title = re.sub(r'\s+', ' ', title)
-        if url not in seen_urls and len(title) > 5 and len(title) < 200:
-            seen_urls.add(url)
-            stories.append({
-                "source": "CCTV",
-                "title": title,
-                "url": url,
-                "date": datetime.now().strftime("%Y-%m-%d")
-            })
+    for today in slash_dates:
+        escaped_today = today.replace("/", "\\/")
+        pattern = rf'href="(https://news\.cctv\.com/{escaped_today}/ARTI[A-Za-z0-9]+\.shtml)"[^>]*>([^<]+)</a>'
 
-    # Also try the TV subdomain
-    html_tv = curl("https://tv.cctv.com/")
-    if html_tv:
-        escaped_today2 = today.replace("/", "\\/")
-        pattern_tv = rf'href="(https://tv\.cctv\.com/{escaped_today2}/VIDE[A-Za-z0-9]+\.shtml)"[^>]*>([^<]+)</a>'
-        for match in re.finditer(pattern_tv, html_tv):
+        for match in re.finditer(pattern, html_content):
             url = match.group(1)
             title = html.unescape(match.group(2)).strip()
             title = re.sub(r'\s+', ' ', title)
-            if url not in seen_urls and len(title) > 5:
+            if url not in seen_urls and len(title) > 5 and len(title) < 200:
                 seen_urls.add(url)
                 stories.append({
                     "source": "CCTV",
                     "title": title,
                     "url": url,
-                    "date": datetime.now().strftime("%Y-%m-%d")
+                    "date": today.replace("/", "-")
                 })
+
+    # Also try the TV subdomain
+    html_tv = curl("https://tv.cctv.com/")
+    if html_tv:
+        for today in slash_dates:
+            escaped_today2 = today.replace("/", "\\/")
+            pattern_tv = rf'href="(https://tv\.cctv\.com/{escaped_today2}/VIDE[A-Za-z0-9]+\.shtml)"[^>]*>([^<]+)</a>'
+            for match in re.finditer(pattern_tv, html_tv):
+                url = match.group(1)
+                title = html.unescape(match.group(2)).strip()
+                title = re.sub(r'\s+', ' ', title)
+                if url not in seen_urls and len(title) > 5:
+                    seen_urls.add(url)
+                    stories.append({
+                        "source": "CCTV",
+                        "title": title,
+                        "url": url,
+                        "date": today.replace("/", "-")
+                    })
 
     # Deduplicate by title similarity
     final = []
@@ -110,24 +123,17 @@ def crawl_cctv():
 #    in the HTML source. No JS execution needed.
 # ============================================================
 def crawl_ifeng():
-    """
-    NOTE: ifeng.com blocks direct curl requests from this environment.
-    All requests return 0 bytes (geo/IP restrictions).
-    
-    FALLBACK: The cronjob should use web_search() to find Phoenix TV
-    articles by searching for "凤凰卫视 最新新闻" or "ifeng.com 今日头条".
-    
-    This function is kept as a stub — returns empty.
-    """
-    return []
+    """Extract headlines from ifeng.com HTML. Uses embedded allData JSON or regex fallback."""
+    stories = []
+    html_content = curl("https://www.ifeng.com/")
+    if not html_content:
+        return stories
 
-    # Extract embedded JSON from window.allData or similar
-    # Pattern 1: Extract allData JSON object
+    # Strategy 1: Parse allData JSON
     all_data_match = re.search(r'var\s+allData\s*=\s*(\{.+?\});', html_content, re.DOTALL)
     if all_data_match:
         try:
             data = json.loads(all_data_match.group(1))
-            # hourRank contains hot news
             for rank_key in ["hourRank", "todayRank", "slideData"]:
                 items = data.get(rank_key, [])
                 if isinstance(items, list):
@@ -135,7 +141,6 @@ def crawl_ifeng():
                         title = item.get("title", "")
                         url = item.get("url", "") or item.get("link", "")
                         if title and url and len(title) > 5:
-                            # ifeng URLs are like //news.ifeng.com/c/... 
                             if url.startswith("//"):
                                 url = "https:" + url
                             stories.append({
@@ -144,23 +149,36 @@ def crawl_ifeng():
                                 "url": url,
                                 "date": datetime.now().strftime("%Y-%m-%d")
                             })
-        except (json.JSONDecodeError, KeyError):
+        except (json.JSONDecodeError, KeyError, TypeError):
             pass
 
-    # Fallback: extract titles from JSON-like patterns
+    # Strategy 2: Regex fallback - extract titles and nearby URLs
     if not stories:
-        titles = re.findall(r'"title"\s*:\s*"([^"]+)"', html_content)
-        urls = re.findall(r'"url"\s*:\s*"(https?://[^"]+)"', html_content)
-        for title, url in zip(titles, urls):
-            if len(title) > 5 and len(title) < 200:
-                if url.startswith("//"):
-                    url = "https:" + url
-                stories.append({
-                    "source": "Phoenix TV",
-                    "title": html.unescape(title).strip(),
-                    "url": url,
-                    "date": datetime.now().strftime("%Y-%m-%d")
-                })
+        # Find title-url pairs in JSON-like structures
+        title_matches = list(re.finditer(r'"title"\s*:\s*"([^"]{10,120})"', html_content))
+        url_matches = list(re.finditer(r'"url"\s*:\s*"(https?://[^"]+)"', html_content))
+        seen = set()
+        for tm in title_matches:
+            title = html.unescape(tm.group(1)).strip()
+            if len(title) < 10 or "凤凰" in title and "计划" in title:
+                continue
+            # Find closest URL after this title
+            pos = tm.end()
+            for um in url_matches:
+                if um.start() > pos:
+                    url = um.group(1)
+                    if url.startswith("//"):
+                        url = "https:" + url
+                    key = title[:30]
+                    if key not in seen:
+                        seen.add(key)
+                        stories.append({
+                            "source": "Phoenix TV",
+                            "title": title,
+                            "url": url,
+                            "date": datetime.now().strftime("%Y-%m-%d")
+                        })
+                    break
 
     # Deduplicate
     seen = set()
@@ -262,26 +280,25 @@ def crawl_guancha():
     if not html_content:
         return stories
 
-    today = datetime.now()
-    date_str = f"{today.year}_{today.month:02d}_{today.day:02d}"
-    
-    pattern = rf'href=\"(/([a-z]+)/{date_str}_(\d+)\.shtml)\"[^>]*>([^<]+)'
+    _, underscore_dates = recent_dates(days=2)
     seen = set()
-    for match in re.finditer(pattern, html_content):
-        path = match.group(1)
-        title = html.unescape(match.group(4)).strip()
-        title = re.sub(r'\s+', ' ', title)
-        url = f"https://www.guancha.cn{path}"
+    for date_str in underscore_dates:
+        pattern = rf'href="(/([a-z]+)/{date_str}_(\d+)\.shtml)"[^>]*>([^<]+)'
+        for match in re.finditer(pattern, html_content):
+            path = match.group(1)
+            title = html.unescape(match.group(4)).strip()
+            title = re.sub(r'\s+', ' ', title)
+            url = f"https://www.guancha.cn{path}"
 
-        key = title[:30]
-        if key not in seen and len(title) > 5 and "阅读" not in title:
-            seen.add(key)
-            stories.append({
-                "source": "观察者网",
-                "title": title,
-                "url": url,
-                "date": datetime.now().strftime("%Y-%m-%d")
-            })
+            key = title[:30]
+            if key not in seen and len(title) > 5 and "阅读" not in title:
+                seen.add(key)
+                stories.append({
+                    "source": "观察者网",
+                    "title": title,
+                    "url": url,
+                    "date": date_str.replace("_", "-")
+                })
 
     return stories[:15]
 
