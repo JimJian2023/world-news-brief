@@ -31,7 +31,7 @@ def parse_rss(url, source):
         date_m = re.search(r'<pubDate>(.*?)</pubDate>', item)
         if title_m and link_m:
             title = re.sub(r'<!\[CDATA\[|\]\]>', '', title_m.group(1)).strip()
-            url = link_m.group(1).strip()
+            url = re.sub(r'<!\[CDATA\[|\]\]>', '', link_m.group(1)).strip()
             desc = re.sub(r'<!\[CDATA\[|\]\]>', '', desc_m.group(1)).strip()[:500] if desc_m else ""
             pubdate = date_m.group(1).strip() if date_m else ""
             if any(d in pubdate for d in allowable):

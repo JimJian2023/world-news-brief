@@ -123,73 +123,78 @@ def crawl_cctv():
 #    in the HTML source. No JS execution needed.
 # ============================================================
 def crawl_ifeng():
-    """Extract headlines from ifeng.com HTML. Uses embedded allData JSON or regex fallback."""
+    """Extract headlines from news.ifeng.com's embedded 'newsstream' JSON.
+
+    The news channel homepage embeds a JSON array whose items carry correctly
+    paired title/url/newsTime fields (unlike www.ifeng.com, where the title↔url
+    pairing via regex fallback is unreliable and produces broken links).
+    """
     stories = []
-    html_content = curl("https://www.ifeng.com/")
+    html_content = curl("https://news.ifeng.com/")
     if not html_content:
         return stories
 
-    # Strategy 1: Parse allData JSON
-    all_data_match = re.search(r'var\s+allData\s*=\s*(\{.+?\});', html_content, re.DOTALL)
-    if all_data_match:
-        try:
-            data = json.loads(all_data_match.group(1))
-            for rank_key in ["hourRank", "todayRank", "slideData"]:
-                items = data.get(rank_key, [])
-                if isinstance(items, list):
-                    for item in items:
-                        title = item.get("title", "")
-                        url = item.get("url", "") or item.get("link", "")
-                        if title and url and len(title) > 5:
-                            if url.startswith("//"):
-                                url = "https:" + url
-                            stories.append({
-                                "source": "Phoenix TV",
-                                "title": html.unescape(title).strip(),
-                                "url": url,
-                                "date": datetime.now().strftime("%Y-%m-%d")
-                            })
-        except (json.JSONDecodeError, KeyError, TypeError):
-            pass
+    idx = html_content.find('"newsstream":')
+    if idx == -1:
+        return stories
+    start = html_content.find('[', idx)
+    if start == -1:
+        return stories
 
-    # Strategy 2: Regex fallback - extract titles and nearby URLs
-    if not stories:
-        # Find title-url pairs in JSON-like structures
-        title_matches = list(re.finditer(r'"title"\s*:\s*"([^"]{10,120})"', html_content))
-        url_matches = list(re.finditer(r'"url"\s*:\s*"(https?://[^"]+)"', html_content))
-        seen = set()
-        for tm in title_matches:
-            title = html.unescape(tm.group(1)).strip()
-            if len(title) < 10 or "凤凰" in title and "计划" in title:
-                continue
-            # Find closest URL after this title
-            pos = tm.end()
-            for um in url_matches:
-                if um.start() > pos:
-                    url = um.group(1)
-                    if url.startswith("//"):
-                        url = "https:" + url
-                    key = title[:30]
-                    if key not in seen:
-                        seen.add(key)
-                        stories.append({
-                            "source": "Phoenix TV",
-                            "title": title,
-                            "url": url,
-                            "date": datetime.now().strftime("%Y-%m-%d")
-                        })
+    # Locate the matching closing bracket (handles nested [] and strings).
+    depth = 0
+    end = start
+    in_str = False
+    esc = False
+    while end < len(html_content):
+        c = html_content[end]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == '\\':
+                esc = True
+            elif c == '"':
+                in_str = False
+        else:
+            if c == '"':
+                in_str = True
+            elif c == '[':
+                depth += 1
+            elif c == ']':
+                depth -= 1
+                if depth == 0:
                     break
+        end += 1
 
-    # Deduplicate
+    try:
+        arr = json.loads(html_content[start:end + 1])
+    except (json.JSONDecodeError, TypeError):
+        return stories
+
     seen = set()
-    final = []
-    for s in stories:
-        key = s["title"][:40]
-        if key not in seen:
-            seen.add(key)
-            final.append(s)
+    for item in arr:
+        if not isinstance(item, dict):
+            continue
+        title = (item.get("title") or "").strip()
+        url = (item.get("url") or "").strip()
+        if item.get("type") != "article" or not title or not url:
+            continue
+        if url.startswith("//"):
+            url = "https:" + url
+        news_time = (item.get("newsTime") or "").strip()
+        date = news_time.split(" ")[0] if news_time else datetime.now().strftime("%Y-%m-%d")
+        key = title[:40]
+        if key in seen:
+            continue
+        seen.add(key)
+        stories.append({
+            "source": "凤凰卫视",
+            "title": html.unescape(title).strip(),
+            "url": url,
+            "date": date,
+        })
 
-    return final[:10]
+    return stories[:10]
 
 
 # ============================================================
