@@ -315,14 +315,53 @@ def crawl_guancha():
 #    FALLBACK: Use web_search in the cronjob.
 # ============================================================
 def crawl_cankaoxiaoxi():
+    """参考消息 (cankaoxiaoxi.com)
+
+    The website homepage is a React SPA with a protected config API, but the
+    underlying channel content is served as public static JSON on the app
+    domain (ckxxapp.ckxx.net). Each channel's article list is available at:
+        https://ckxxapp.ckxx.net/json/channel/{alias}/list.json
+    The channel aliases are stable, so we hardcode them and filter to recent
+    articles (last 2 days).
     """
-    NOTE: cankaoxiaoxi.com is a React SPA with a protected API.
-    Direct scraping is not feasible.
-    
-    FALLBACK: The cronjob should use web_search() for
-    "参考消息 最新新闻" or "cankaoxiaoxi.com 今日要闻".
-    """
-    return []
+    from datetime import datetime, timedelta
+    channels = {
+        "gj": "国际",
+        "zhongguo": "中国",
+        "guandian": "观点",
+    }
+    recent = [(datetime.now() - timedelta(days=d)).strftime("%Y-%m-%d") for d in range(2)]
+    seen = set()
+    stories = []
+    for alias in channels:
+        raw = curl(f"https://ckxxapp.ckxx.net/json/channel/{alias}/list.json")
+        if not raw:
+            continue
+        try:
+            data = json.loads(raw)
+        except (json.JSONDecodeError, TypeError):
+            continue
+        for item in data.get("list", []):
+            d = item.get("data", {}) if isinstance(item, dict) else {}
+            title = (d.get("title") or d.get("shorttitle") or "").strip()
+            url = (d.get("url") or "").strip()
+            pub = (d.get("publishTime") or d.get("createtime") or "").strip()
+            if not title or not url:
+                continue
+            date_part = pub.split(" ")[0] if pub else ""
+            if date_part and date_part not in recent:
+                continue
+            key = title[:30]
+            if key in seen:
+                continue
+            seen.add(key)
+            stories.append({
+                "source": "参考消息",
+                "title": title,
+                "url": url,
+                "date": date_part or datetime.now().strftime("%Y-%m-%d"),
+            })
+    return stories[:15]
 
 
 # ============================================================
