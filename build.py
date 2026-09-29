@@ -1,11 +1,31 @@
 #!/usr/bin/env python3
 """Build World News Brief with detailed article pages."""
 
-import base64, json, re, html, subprocess, sys, random, os
+import base64, json, re, html, subprocess, sys, random, os, urllib.parse
 from datetime import datetime
 from collections import defaultdict
 
-TOKEN = os.environ.get("GITHUB_TOKEN", "")
+# Get GitHub token: try gh auth token first (always works if gh is authenticated),
+# then fall back to env var or .bashrc
+TOKEN = ""  # not really used any more — push uses gh auth token directly
+try:
+    r = subprocess.run(["gh", "auth", "token"], capture_output=True, text=True, timeout=5)
+    if r.returncode == 0 and r.stdout.strip():
+        os.environ["GITHUB_TOKEN"] = r.stdout.strip()
+except:
+    pass
+if not os.environ.get("GITHUB_TOKEN"):
+    token = os.environ.get("GITHUB_TOKEN", "")
+    if not token:
+        try:
+            with open(os.path.expanduser("~/.bashrc")) as f:
+                for line in f:
+                    if line.startswith("export GITHUB_TOKEN="):
+                        token = line.split("=", 1)[1].strip().strip('"').strip("'")
+                        break
+        except: pass
+    if token:
+        os.environ["GITHUB_TOKEN"] = token
 OWNER = "JimJian2023"
 REPO = "world-news-brief"
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -155,6 +175,23 @@ def main():
     with open(f"{PROJECT_DIR}/index.html", "w") as f: f.write(html)
     print(f"Saved {len(html)} bytes to index.html", file=sys.stderr)
     print(f"EN: {len(en_world)}W+{len(en_tech)}T | ZH: {len(cn_world)}W+{len(cn_tech)}T", file=sys.stderr)
+
+    # Auto-push to GitHub Pages — refresh remote URL with live gh token
+    try:
+        subprocess.run(["git", "add", "index.html"], cwd=PROJECT_DIR, capture_output=True)
+        subprocess.run(["git", "-c", "user.name=Ning", "-c", "user.email=JimJian2023@gmail.com",
+                      "commit", "--allow-empty", "-m",
+                      f"Auto-build: {datetime.now().strftime('%Y-%m-%d %H:%M')} — EN: {len(en_world)}W+{len(en_tech)}T, ZH: {len(cn_world)}W+{len(cn_tech)}T"],
+                     cwd=PROJECT_DIR, capture_output=True)
+        token = os.environ.get("GITHUB_TOKEN", "")
+        push_url = f"https://JimJian2023:{token}@github.com/JimJian2023/world-news-brief.git" if token else "origin"
+        r = subprocess.run(["git", "push", push_url, "main"], cwd=PROJECT_DIR, capture_output=True, text=True)
+        if r.returncode == 0:
+            print("Pushed to GitHub Pages successfully", file=sys.stderr)
+        else:
+            print(f"Push failed: {r.stderr[:300]}", file=sys.stderr)
+    except Exception as e:
+        print(f"Push error: {e}", file=sys.stderr)
 
 if __name__ == "__main__":
     main()
